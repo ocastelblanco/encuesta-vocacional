@@ -5,7 +5,7 @@ Encuesta vocacional creada para el Politécnico Grancolombiano.
 * Bootstrap 3
 * UI Bootstrap
 * UI Grid
-* UI Chart with jQplot
+* angular-chart.js
 * SASS
-* Meedo para PHP/MySQL
+* Medoo para PHP/MySQL
 * Grunt

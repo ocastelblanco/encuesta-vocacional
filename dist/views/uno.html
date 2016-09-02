@@ -1,0 +1,60 @@
+<div class="col-sm-3">&nbsp;
+    <button class="btn btn-default" ng-click="cont.avanzar(2)">Avanzar</button>
+</div>
+<div class="col-sm-6" ng-controller="paso1 as p1">
+    <h1>Encuesta vocacional <small>Datos personales</small></h1>
+    <h6>Debe completar todos los campos para continuar.</h6>
+    <div class="formulario">
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.nombres}">
+            <label for="nombres">Nombres</label>
+            <input type="text" class="form-control" id="nombres" placeholder="Nombres completos" ng-model="cont.datos.nombres">
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.nombres"></i>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.apellidos}">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos completos" ng-model="cont.datos.apellidos">
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.apellidos"></i>
+        </div>
+        <div class="row">
+            <div class="col-sm-5 col-izq form-group has-feedback" ng-class="{'has-success': cont.datos.tipo}">
+                <label for="tipo">Tipo de documento</label>
+                <select id="tipo" class="form-control" ng-model="cont.datos.tipo">
+                    <option ng-repeat="tipo in p1.tipos track by $index" value="{{$index+1}}">{{tipo}}</option>
+                </select>
+                <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.tipo"></i>
+            </div>
+            <div class="col-sm-7 col-der form-group has-feedback" ng-class="{'has-success': cont.datos.documento}">
+                <label for="documento">Número de documento</label>
+                <input type="text" class="form-control" id="documento" placeholder="Número de documento de identidad" ng-model="cont.datos.documento">
+                <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.documento"></i>
+            </div>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success':cont.datos.email}">
+            <label for="email">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" placeholder="Correo electrónico" ng-model="cont.datos.email">
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.email"></i>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.celular}">
+            <label for="celular">Número celular</label>
+            <input type="number" class="form-control" id="celular" placeholder="Número celular" ng-model="cont.datos.celular">
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.celular"></i>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.departamento}">
+            <label for="departamento">Departamento</label>
+            <select id="departamento" class="form-control" ng-model="cont.datos.departamento" ng-options="depto as depto for (depto,valor) in p1.municipios">
+            </select>
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.departamento"></i>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.municipio}">
+            <label for="municipio">Municipio</label>
+            <select id="municipio" class="form-control" ng-model="cont.datos.municipio" ng-options="ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento">
+            </select>
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.municipio"></i>
+        </div>
+        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(2)" ng-disabled="!cont.datos.nombres || !cont.datos.apellidos || !cont.datos.tipo || !cont.datos.documento || !cont.datos.email || !cont.datos.celular || !cont.datos.departamento || !cont.datos.municipio">
+            Registrar y continuar
+            <i class="fa fa-step-forward"></i>
+        </button>
+    </div>
+</div><!-- /.col-sm-6 -->
+<div class="col-sm-3">&nbsp;</div>

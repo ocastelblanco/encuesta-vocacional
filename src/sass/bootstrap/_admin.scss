@@ -1,0 +1,32 @@
+.nav a,
+.pagination a,
+.panel-title a {
+    cursor: pointer;
+}
+.admin-contenido{
+    position: relative;
+    &.ng-enter {
+        transition: 0.5s linear all;
+        top: -500px;
+        &.ng-enter-active {
+            top: 0;
+        }
+    }
+    &.ng-leave {
+        top: 0;
+        &.ng-leave-active {
+            transition: 0.5s linear all;
+            top: -500px;
+        }
+    }
+}
+.alert {
+    margin-top: 1em;
+    &.ng-hide {
+        transition: 0.5s linear all;
+        opacity: 0;
+    }
+}
+.tabla-datos {
+    height: 600px;
+}

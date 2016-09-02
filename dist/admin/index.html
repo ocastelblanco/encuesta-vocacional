@@ -1,0 +1,24 @@
+<!doctype html>
+<html ng-app="admin">
+    <head>
+        <title>Politécnico Grancolombiano</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../assets/css/ui-grid.min.css">
+        <!-- Llamado a dependencias JS -->
+        <script src="../assets/js/angular.min.js"></script>
+        <script src="../assets/js/angular-touch.min.js"></script>
+        <script src="../assets/js/angular-animate.min.js"></script>
+        <script src="../assets/js/ui-bootstrap-tpls.min.js"></script>
+        <script src="../assets/js/ui-grid.min.js"></script>
+    </head>
+    <body>
+        <ng-view ng-controller="main as mn" ng-cloak>
+            <ng-include class="admin-contenido" src="mn.contenido"></ng-include>
+        </ng-view>
+        <!-- Componentes de la app raiz -->
+        <script src="../modules/admin-module.min.js"></script>
+    </body>
+</html>

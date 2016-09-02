@@ -1,0 +1,30 @@
+<div class="container" ng-controller="adminLogin as al">
+    <div class="row">
+        <div class="col-md-4">&nbsp;</div>
+        <div class="col-md-4">
+            <br><br>
+            <p>Para tener acceso a esta información debe autenticarse.</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">Ingrese sus datos</div>
+                <div class="panel-body">
+                    <form ng-submit="al.ingreso()">
+                        <div class="form-group">
+                            <label for="user">Usuario</label>
+                            <input type="text" class="form-control" id="user" placeholder="Usuario" ng-model="al.user">
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label for="clave">Contraseña</label>
+                            <input type="password" class="form-control" id="clave" placeholder="Contraseña" ng-model="al.clave">
+                        </div><!-- /.form-group -->
+                        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                    </form>
+                    <div uib-alert class="alert-danger alert" close="al.cerrarAlerta()" ng-show="al.verAlerta">
+                        <i class="fa fa-exclamation-triangle fa-2x"></i>
+                        <span>¡Los datos ingresados son incorrectos! Ingrese los datos correctos de nuevo.</span>
+                    </div>
+                </div><!-- /.panel-body -->
+            </div><!-- /.panel -->
+        </div><!-- /.col-md-4 -->
+        <div class="col-md-4">&nbsp;</div>
+    </div><!-- /.row -->
+</div><!-- /.container -->

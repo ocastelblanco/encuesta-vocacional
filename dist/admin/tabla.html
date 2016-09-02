@@ -1,0 +1,25 @@
+<div class="container-fluid" ng-controller="adminGeneral as ag">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Encuesta vocacional</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a ng-click="ag.salir()">Salir</a></li>
+            </ul>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row">
+        <div class="col-md-8">&nbsp;</div>
+        <div class="col-md-4">
+            <a href="../php/descargar.php" class="btn btn-block btn-success">
+                <i class="fa fa-file-excel-o fa-lg"></i>
+                Descargar tabla
+            </a>
+        </div>
+        <br><br>
+        <div class="col-md-12">
+            <div ui-grid="ag.datosTabla" ui-grid-selection ui-grid-pagination class="tabla-datos"></div>
+        </div>
+    </div><!-- /.row -->
+</div>

@@ -1,0 +1,18 @@
+<div class="col-sm-3">&nbsp;</div>
+<div class="col-sm-6" ng-controller="paso3 as p3" ng-init="bloque = 'B'">
+    <div class="formulario">
+        <div class="form-group" ng-repeat="pregunta in p3.preguntas track by $index">
+            <label for="{{bloque+($index+1)}}">{{pregunta}}</label>
+            <rzslider id="{{bloque+($index+1)}}" rz-slider-model="cont.datos[bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
+        </div>
+        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(4)" ng-disabled="cont.validar(bloque)">
+            Registrar respuestas y continuar
+            <i class="fa fa-step-forward"></i>
+        </button>
+        <button class="btn btn-default btn-block" ng-click="cont.avanzar(2)">
+            <i class="fa fa-step-backward"></i>
+            Volver
+        </button>
+    </div>
+</div>
+<div class="col-sm-3">&nbsp;</div>
