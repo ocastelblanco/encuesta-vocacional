@@ -74,12 +74,25 @@ admin.controller('adminGeneral', ['i18nService','sesion', 'datos', '$rootScope',
                 {name: 'celular', displayName: 'Celular'},
                 {name: 'departamento', displayName: 'Departamento'},
                 {name: 'ciudad', displayName: 'Ciudad'},
+                {name: 'perfil1', displayName: 'Artístico-Comunicativo'},
+                {name: 'perfil2', displayName: 'Convencional-Analítico'},
+                {name: 'perfil3', displayName: 'Empresarial-Emprendedor'},
+                {name: 'perfil4', displayName: 'Social-Investigador'},
                 {name: 'fecha', displayName: 'Fecha de registro'}
         ]
     };
     cargaTabla();
     function cargaTabla() {
         datos.listar().then(function(resp){
+            var bloques = ['A', 'B', 'C', 'D', 'E'];
+            angular.forEach(resp, function(valor, llave){
+                for (var i=1;i<5;i++) {
+                    resp[llave]['perfil'+i] = 0;
+                    for (var l=0;l<bloques.length;l++) {
+                        resp[llave]['perfil'+i] = Number(resp[llave]['perfil'+i]) + Number(resp[llave][bloques[l]+i]) + Number(resp[llave][bloques[l]+(i+4)]);
+                    }
+                }
+            });
             salida.datosTabla.data = resp;
         });
     }

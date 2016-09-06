@@ -42,13 +42,24 @@ for ($i=0;$i<count($data);$i++) {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $cont);
     }
 }
-/*
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Hello')
-            ->setCellValue('B2', 'world!')
-            ->setCellValue('C1', 'Hello')
-            ->setCellValue('D2', 'world!');
-*/
+for ($n=0;$n<4;$n++) {
+    $celda = $letraCeldas[count($campos)+$n]."1";
+    $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $labels[$n]);
+}
+for ($i=0;$i<count($data);$i++) {
+    for ($n=1;$n<5;$n++) {
+        $resp[$i] = 0;
+        for ($l=0;$l<count($bloques);$l++) {
+            $resp[$i] = $resp[$i] + $data[$i][$bloques[$l].$n] + $data[$i][$bloques[$l].($n+4)];
+        }
+        $celda = $letraCeldas[count($campos)-1+$n].($i+2);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $resp[$i]);
+    }
+}
+for ($i=0;$i<count($letraCeldas);$i++)
+    $objPHPExcel->getActiveSheet()->getColumnDimension($letraCeldas[$i])->setAutoSize(true);
+$styleArray = array('font' => array('bold' => true));
+$objPHPExcel->getActiveSheet()->getStyle('A1:BZ1')->applyFromArray($styleArray);
 $objPHPExcel->getActiveSheet()->setTitle('Datos');
 $objPHPExcel->setActiveSheetIndex(0);
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -34,7 +34,6 @@ app.controller('contenedor', [function(){
             }
         }
         yo.graficoData = [per,int];
-        console.log(yo.graficoData);
     };
     yo.opcionesSlider = {
         floor: 0,
