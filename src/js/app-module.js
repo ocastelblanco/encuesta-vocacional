@@ -13,17 +13,28 @@ var app = angular.module('app', [
 app.controller('main', [function(){
     console.log('main');
 }]);
-app.controller('contenedor', ['$location',function($location){
+app.controller('contenedor', [function(){
     console.log('contenedor');
     var rutasCont = {'/': 'uno', '/1': 'uno', '/2': 'dos', '/3': 'tres', '/4': 'cuatro', '/5': 'cinco', '/6': 'seis', '/7': 'siete'};
+    var per = [0,0,0,0];
+    var int = [0,0,0,0];
+    var bloques = ['A', 'B', 'C', 'D', 'E'];
     var yo = this;
     yo.banner = 'views/banner.html';
     yo.footer = 'views/footer.html';
-    //yo.encuesta = 'views/'+rutasCont[$location.path()]+'.html';
     yo.encuesta = 'views/uno.html';
     yo.datos = {};
     yo.avanzar = function(destino) {
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
+        var numP = destino - 3;
+        if (destino > 2) {
+            for (var i=0;i<per.length;i++) {
+                per[i] = per[i] + yo.datos[bloques[numP]+(i+1)];
+                int[i] = int[i] + yo.datos[bloques[numP]+(i+5)];
+            }
+        }
+        yo.graficoData = [per,int];
+        console.log(yo.graficoData);
     };
     yo.opcionesSlider = {
         floor: 0,
@@ -97,10 +108,6 @@ app.controller('paso7', [function(){
     var yo = this;
     yo.labels = ['Artístico-Comunicativo', 'Convencional-Analítico', 'Empresarial-Emprendedor', 'Social-Investigador'];
     yo.series = ['Personalidad', 'Interés'];
-    yo.data = [
-        [5, 9, 7, 20],
-        [5, 5, 7, 20]
-    ];
 }]);
 // Servicios
 app.service('json', ['$http', function($http){

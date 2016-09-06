@@ -1,20 +1,21 @@
 body {
+    padding-top: 70px;
     padding-bottom: 70px;
 }
 .contenido {
     position: relative;
     &.ng-enter {
         transition: 0.5s linear all;
-        right: -2400px;
+        top: -2400px;
         &.ng-enter-active {
-            right: 0;
+            top: 0;
         }
     }
     &.ng-leave {
         transition: 0.5s linear all;
-        left: 0;
+        bottom: 0;
         &.ng-leave-active {
-            left: -2400px;
+            bottom: -2400px;
         }
     }
     .formulario {
