@@ -1,7 +1,14 @@
 <div class="row" ng-controller="paso7 as p7">
     <div class="col-md-2">&nbsp;</div>
     <div class="col-md-8">
+        <p>Tu perfil tiende a {{cont.tendencia}}</p>
         <canvas id="bar" class="chart chart-bar" chart-data="cont.graficoData" chart-labels="p7.labels" chart-series="p7.series"></canvas>
+        <div class="panel form-group has-feedback" ng-class="{'has-success': cont.datos.modalidad}">
+            <label for="modalidad">¿En qué modalidad te gustaría hacer tu carrera?</label>
+            <select id="modalidad" class="form-control" ng-model="cont.datos.modalidad" ng-options="modalidad as valor for (modalidad,valor) in p7.modalidades" ng-change="cont.grabarDatos()">
+            </select>
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.modalidad"></i>
+        </div>
     </div>
     <div class="col-md-2">&nbsp;</div>
 </div>

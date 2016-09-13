@@ -1,6 +1,4 @@
-<div class="col-sm-3">&nbsp;
-    <button class="btn btn-default" ng-click="cont.avanzar(2)">Avanzar</button>
-</div>
+<div class="col-sm-3">&nbsp;</div>
 <div class="col-sm-6" ng-controller="paso1 as p1">
     <h1>Encuesta vocacional <small>Datos personales</small></h1>
     <h6>Debe completar todos los campos para continuar.</h6>
@@ -18,20 +16,19 @@
         <div class="row">
             <div class="col-sm-5 col-izq form-group has-feedback" ng-class="{'has-success': cont.datos.tipo}">
                 <label for="tipo">Tipo de documento</label>
-                <select id="tipo" class="form-control" ng-model="cont.datos.tipo">
-                    <option ng-repeat="tipo in p1.tipos track by $index" value="{{$index+1}}">{{tipo}}</option>
+                <select id="tipo" class="form-control" ng-model="cont.datos.tipo" ng-options="tipo as valor for (tipo,valor) in p1.tipos">
                 </select>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.tipo"></i>
             </div>
             <div class="col-sm-7 col-der form-group has-feedback" ng-class="{'has-success': cont.datos.documento}">
                 <label for="documento">Número de documento</label>
-                <input type="text" class="form-control" id="documento" placeholder="Número de documento de identidad" ng-model="cont.datos.documento">
+                <input type="text" class="form-control" id="documento" placeholder="Número de documento de identidad" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)">
                 <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.documento"></i>
             </div>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success':cont.datos.email}">
             <label for="email">Correo electrónico</label>
-            <input type="email" class="form-control" id="email" placeholder="Correo electrónico" ng-model="cont.datos.email">
+            <input type="email" class="form-control" id="email" placeholder="Correo electrónico" ng-model="cont.datos.email" ng-blur="cont.verificaCampo('email',cont.datos.email)">
             <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.email"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.celular}">
@@ -45,13 +42,13 @@
             </select>
             <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.departamento"></i>
         </div>
-        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.municipio}">
-            <label for="municipio">Municipio</label>
-            <select id="municipio" class="form-control" ng-model="cont.datos.municipio" ng-options="ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento">
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.ciudad}">
+            <label for="ciudad">Municipio</label>
+            <select id="ciudad" class="form-control" ng-model="cont.datos.ciudad" ng-options="ciudad as ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento">
             </select>
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.municipio"></i>
+            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.ciudad"></i>
         </div>
-        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(2)" ng-disabled="!cont.datos.nombres || !cont.datos.apellidos || !cont.datos.tipo || !cont.datos.documento || !cont.datos.email || !cont.datos.celular || !cont.datos.departamento || !cont.datos.municipio">
+        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(2)" ng-disabled="!cont.datos.nombres || !cont.datos.apellidos || !cont.datos.tipo || !cont.datos.documento || !cont.datos.email || !cont.datos.celular || !cont.datos.departamento || !cont.datos.ciudad">
             Registrar y continuar
             <i class="fa fa-step-forward"></i>
         </button>
