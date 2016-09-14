@@ -34,9 +34,13 @@ app.controller('contenedor', ['datos', function(datos){
                     {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'},
                     {'bloque': 'E', 'pag': 7, 'destino': 'Resultados'}];
     yo.datos = {};
-    var completado = Object.keys(yo.datos).length;
-    var incompleto = 50-completado;
-    yo.dataAvance = [completado, incompleto];
+    // ****************************************
+    // Usar $watch para vigilar el cambio en yo.dataAvance
+    yo.dataAvance = obtieneAvance();
+    function obtieneAvance() {
+        return [Object.keys(yo.datos).length, 50-Object.keys(yo.datos).length];
+    };
+    // *****************************************
     yo.labelsAvance = ['Completado', 'Por completar'];
     yo.avanzar = function(destino) {
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
