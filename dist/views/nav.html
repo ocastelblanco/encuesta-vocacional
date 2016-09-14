@@ -1,0 +1,16 @@
+<nav class="navegacion">
+    <div class="col-xs-2 col-md-12">
+        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(1)">
+            <i class="fa fa-step-forward"></i>
+            <span>Datos personales</span>
+        </button>
+    </div>
+    <div class="col-xs-10 col-md-12">
+        <div class="col-xs-2 col-md-12" ng-repeat="boton in cont.navegacion">
+            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(boton.pag)" ng-disabled="cont.validar(boton.bloque)">
+                <i class="fa fa-step-forward"></i>
+                <span>{{boton.destino}}</span>
+            </button>
+        </div>
+    </div>
+</nav>

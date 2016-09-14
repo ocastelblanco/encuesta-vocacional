@@ -1,5 +1,4 @@
-<div class="col-sm-3">&nbsp;</div>
-<div class="col-sm-6" ng-controller="paso3 as p3" ng-init="bloque = 'B'">
+<div ng-controller="paso3 as p3" ng-init="bloque = 'B'">
     <div class="formulario">
         <div class="form-group" ng-repeat="pregunta in p3.preguntas track by $index">
             <label for="{{bloque+($index+1)}}">{{pregunta}}</label>
@@ -15,4 +14,3 @@
         </button>
     </div>
 </div>
-<div class="col-sm-3">&nbsp;</div>

@@ -24,8 +24,20 @@ app.controller('contenedor', ['datos', function(datos){
     var yo = this;
     yo.banner = 'views/banner.html';
     yo.footer = 'views/footer.html';
+    yo.avance = 'views/avance.html';
+    yo.nav = 'views/nav.html';
     yo.encuesta = 'views/uno.html';
+    yo.navegacion = [{'bloque': 'Datos', 'pag': 2, 'destino': 'Bloque A'},
+                    {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B'},
+                    {'bloque': 'B', 'pag': 4, 'destino': 'Bloque C'},
+                    {'bloque': 'C', 'pag': 5, 'destino': 'Bloque D'},
+                    {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'},
+                    {'bloque': 'E', 'pag': 7, 'destino': 'Resultados'}];
     yo.datos = {};
+    var completado = Object.keys(yo.datos).length;
+    var incompleto = 50-completado;
+    yo.dataAvance = [completado, incompleto];
+    yo.labelsAvance = ['Completado', 'Por completar'];
     yo.avanzar = function(destino) {
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
         var numP = destino - 3;
@@ -61,10 +73,20 @@ app.controller('contenedor', ['datos', function(datos){
     };
     yo.validar = function(bloque) {
         var salida = true;
-        for (var i=1;i<9;i++) {
-            if (!yo.datos[bloque+i]) {
+        if (bloque != 'Datos') {
+            for (var i=1;i<9;i++) {
+                if (!yo.datos[bloque+i]) {
+                    salida = false;
+                }
+            }
+        } else if (bloque == 'Datos') {
+            if (!yo.datos.nombres || !yo.datos.apellidos || !yo.datos.tipo ||
+                !yo.datos.documento || !yo.datos.email || !yo.datos.celular ||
+                !yo.datos.departamento || !yo.datos.ciudad) {
                 salida = false;
             }
+        } else {
+            salida = true;
         }
         return !salida;
     };

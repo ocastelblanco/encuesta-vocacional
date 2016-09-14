@@ -1,5 +1,4 @@
-<div class="col-sm-3">&nbsp;</div>
-<div class="col-sm-6" ng-controller="paso1 as p1">
+<div ng-controller="paso1 as p1">
     <h1>Encuesta vocacional <small>Datos personales</small></h1>
     <h6>Debe completar todos los campos para continuar.</h6>
     <div class="formulario">
@@ -48,10 +47,9 @@
             </select>
             <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.ciudad"></i>
         </div>
-        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(2)" ng-disabled="!cont.datos.nombres || !cont.datos.apellidos || !cont.datos.tipo || !cont.datos.documento || !cont.datos.email || !cont.datos.celular || !cont.datos.departamento || !cont.datos.ciudad">
+        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(2)" ng-disabled="cont.validar('Datos')">
             Registrar y continuar
             <i class="fa fa-step-forward"></i>
         </button>
     </div>
-</div><!-- /.col-sm-6 -->
-<div class="col-sm-3">&nbsp;</div>
+</div>
