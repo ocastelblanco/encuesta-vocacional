@@ -1,5 +1,4 @@
 /* global angular */
-
 var app = angular.module('app', [
     'ngRoute',
     'ngTouch',
@@ -10,38 +9,63 @@ var app = angular.module('app', [
 ]);
 var tiposDocumentos = ['','Cédula de Ciudadanía','Tarjeta de Identidad','Cédula de Extranjería','Pasaporte','Registro Civil'];
 var tiposModalidades = ['','Presencial','Virtual'];
-var tiposLabels = [['Artístico','Comunicativo'],['Convencional','Analítico'],['Empresarial','Emprendedor'],['Social','Investigador']];
+var tiposLabels = [
+    ['Artístico','Comunicativo'],
+    ['Convencional','Analítico'],
+    ['Empresarial','Emprendedor'],
+    ['Social','Investigador']
+];
 // Controladores
 app.controller('main', [function(){
     console.log('main');
 }]);
-app.controller('contenedor', ['datos', function(datos){
+app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos, $rootScope, $uibModal){
     console.log('contenedor');
     var rutasCont = {'/': 'uno', '/1': 'uno', '/2': 'dos', '/3': 'tres', '/4': 'cuatro', '/5': 'cinco', '/6': 'seis', '/7': 'siete'};
     var per = [0,0,0,0];
     var int = [0,0,0,0];
     var bloques = ['A', 'B', 'C', 'D', 'E'];
+    var preCargaDatos = false;
     var yo = this;
     yo.banner = 'views/banner.html';
     yo.footer = 'views/footer.html';
     yo.avance = 'views/avance.html';
     yo.nav = 'views/nav.html';
     yo.encuesta = 'views/uno.html';
-    yo.navegacion = [{'bloque': 'Datos', 'pag': 2, 'destino': 'Bloque A'},
-                    {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B'},
-                    {'bloque': 'B', 'pag': 4, 'destino': 'Bloque C'},
-                    {'bloque': 'C', 'pag': 5, 'destino': 'Bloque D'},
-                    {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'},
-                    {'bloque': 'E', 'pag': 7, 'destino': 'Resultados'}];
+    yo.navegacion = [
+        {'bloque': 'Datos', 'pag': 2, 'destino': 'Bloque A'},
+        {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B'},
+        {'bloque': 'B', 'pag': 4, 'destino': 'Bloque C'},
+        {'bloque': 'C', 'pag': 5, 'destino': 'Bloque D'},
+        {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'},
+        {'bloque': 'E', 'pag': 7, 'destino': 'Resultados'}
+    ];
     yo.datos = {};
-    // ****************************************
-    // Usar $watch para vigilar el cambio en yo.dataAvance
-    yo.dataAvance = obtieneAvance();
-    function obtieneAvance() {
-        return [Object.keys(yo.datos).length, 50-Object.keys(yo.datos).length];
-    };
-    // *****************************************
+    $rootScope.$watch(function(){return yo.datos}, function(nuevo,viejo){
+        angular.forEach(yo.datos, function(valor, llave) {
+            if (!valor) {
+                delete yo.datos[llave];
+            }
+        });
+        yo.dataAvance = [Object.keys(yo.datos).length, 51-Object.keys(yo.datos).length];
+        yo.porcentajeAvance = Math.floor(((yo.dataAvance[0]/51) * 100)+0.5) + '%';
+    }, true);
     yo.labelsAvance = ['Completado', 'Por completar'];
+    yo.opcionesAvance = {
+        tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                        return previousValue + currentValue;
+                    });
+                    var currentValue = dataset.data[tooltipItem.index];
+                    var porcentaje = Math.floor(((currentValue/total) * 100)+0.5);
+                    return data.labels[tooltipItem.index] + ' ' + porcentaje + '%';
+                }
+            }
+        } 
+    };
     yo.avanzar = function(destino) {
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
         var numP = destino - 3;
@@ -83,26 +107,35 @@ app.controller('contenedor', ['datos', function(datos){
                     salida = false;
                 }
             }
-        } else if (bloque == 'Datos') {
-            if (!yo.datos.nombres || !yo.datos.apellidos || !yo.datos.tipo ||
-                !yo.datos.documento || !yo.datos.email || !yo.datos.celular ||
-                !yo.datos.departamento || !yo.datos.ciudad) {
-                salida = false;
-            }
-        } else {
-            salida = true;
+        }
+        if (!yo.datos.nombres || !yo.datos.apellidos || !yo.datos.tipo ||
+            !yo.datos.documento || !yo.datos.email || !yo.datos.celular ||
+            !yo.datos.departamento || !yo.datos.ciudad) {
+            salida = false;
         }
         return !salida;
     };
     yo.verificaCampo = function(campo, valor){
         datos.buscar(campo,valor).then(function(resp){
-            if (resp.id) {
-                //  -----------------> Activar Modal!!!!!
-                console.log('Activar modal');
-                cargarDatos(resp.id);
+            if (resp.id && !preCargaDatos) {
+                preCargaDatos = true;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'views/modal.html',
+                    controller: modalPreCargaDatos
+                });
+                modalInstance.result.then(function(accion){
+                    if(accion){cargarDatos(resp.id)}
+                });
             }
         });
     };
+    var modalPreCargaDatos = ['$uibModalInstance', '$scope', function($uibModalInstance, $scope){
+        $scope.titulo = 'Tus datos ya existen';
+        $scope.cuerpo = 'Tus datos ya están en nuestra base de datos. ¿Deseas cargarlos todos?';
+        $scope.accion = function(accion){
+            $uibModalInstance.close(accion);
+        };
+    }];
     yo.grabarDatos = function() {
         guardarDatos();
     };

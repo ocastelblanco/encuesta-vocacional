@@ -27,3 +27,17 @@ body {
         }
     }
 }
+.avance {
+    .grafico {
+        position: relative;
+        .porcentaje {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-weight: 800;
+            font-size: 1.25em;
+            margin-top: -0.75em;
+            margin-left: -1em;
+        }
+    }
+}

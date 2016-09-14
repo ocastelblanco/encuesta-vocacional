@@ -1,3 +1,9 @@
-<div>
-    <canvas id="doughnut" class="chart chart-doughnut" chart-data="cont.dataAvance" chart-labels="cont.labelsAvance"></canvas>
+<div class="avance">
+    <h3>Avance de la encuesta</h3>
+    <div class="grafico">
+        <canvas id="doughnut" class="chart chart-doughnut" chart-data="cont.dataAvance" chart-labels="cont.labelsAvance" chart-options="cont.opcionesAvance"></canvas>
+        <div class="porcentaje">
+            {{cont.porcentajeAvance}}
+        </div>
+    </div>
 </div>
