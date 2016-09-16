@@ -41,3 +41,50 @@ body {
         }
     }
 }
+$top-alerta: $navbar-margin-bottom * 1.95;
+.alerta-sup {
+    position: fixed;
+    top: $top-alerta * 2;
+    text-align: center;
+    z-index: 999;
+    @media (min-width: $screen-sm-min) {
+        width: $container-sm;
+        top: $top-alerta;
+    }
+    @media (min-width: $screen-md-min) {
+        width: $container-md;
+        top: $top-alerta;
+    }
+    @media (min-width: $screen-lg-min) {
+        width: $container-lg;
+        top: $top-alerta;
+    }
+    &.ng-enter {
+        transition: 0.5s linear all;
+        top: -10px;
+        &.ng-enter-active {
+            top: $top-alerta;
+        }
+    }
+    &.ng-leave {
+        transition: 0.5s linear all;
+    }
+    &.ng-leave-active {
+        top: -10px;
+    }
+}
+.avance-lineal {
+    .titulo {
+        display: inline-block;
+        padding-left: $navbar-padding-horizontal;
+    }
+    .progress {
+        display: inline-block;
+        margin: 0 $navbar-padding-horizontal 0 $navbar-padding-horizontal;
+        width: 70%;
+        .porcentaje {
+            color: white;
+            white-space: nowrap;
+        }
+    }
+}

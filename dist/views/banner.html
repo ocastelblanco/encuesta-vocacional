@@ -1,5 +1,20 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
-        <a class="navbar-brand">Politécnico</a>
+        <div class="navbar-header">
+            <a class="navbar-brand">Politécnico</a>
+        </div>
+        <div class="nav navbar-nav avance-lineal hidden-sm hidden-md hidden-lg">
+            <span class="titulo">Avance</span>
+            <uib-progressbar max="cont.totalCampos" value="cont.dataAvance[0]">
+                <span class="porcentaje">{{cont.porcentajeAvance}}</span>
+            </uib-progressbar>
+        </div>
     </div>
 </nav>
+<div ng-repeat="alerta in cont.alertas" class="alerta-sup alert alert-{{alerta.estilo}} alert-dismissible" role="alert" ng-if="alerta.visible">
+    <button type="button" class="close" aria-label="Close" ng-click="alerta.visible=!alerta.visible">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <i class="fa {{alerta.icono}} fa-2x fa-fw"></i>
+    {{alerta.texto}}
+</div>

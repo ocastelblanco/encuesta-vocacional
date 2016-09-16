@@ -1,13 +1,13 @@
 <nav class="navegacion">
-    <div class="col-xs-2 col-md-12">
-        <button class="btn btn-primary btn-block" ng-click="cont.avanzar(1)">
+    <div class="col-xs-2 col-sm-12">
+        <button class="btn btn-primary btn-block" ng-class="{'active': cont.pag == 1}" ng-click="cont.avanzar(1)">
             <i class="fa fa-step-forward"></i>
             <span>Datos personales</span>
         </button>
     </div>
-    <div class="col-xs-10 col-md-12">
-        <div class="col-xs-2 col-md-12" ng-repeat="boton in cont.navegacion">
-            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(boton.pag)" ng-disabled="cont.validar(boton.bloque)">
+    <div class="col-xs-10 col-sm-12">
+        <div class="col-xs-2 col-sm-12" ng-repeat="boton in cont.navegacion track by $index">
+            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(boton.pag)" ng-disabled="cont.validar(boton.bloque)" ng-class="{'active': cont.pag == ($index+2)}">
                 <i class="fa fa-step-forward"></i>
                 <span>{{boton.destino}}</span>
             </button>

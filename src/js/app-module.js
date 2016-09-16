@@ -19,7 +19,7 @@ var tiposLabels = [
 app.controller('main', [function(){
     console.log('main');
 }]);
-app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos, $rootScope, $uibModal){
+app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', function(datos, $rootScope, $uibModal, $timeout){
     console.log('contenedor');
     var rutasCont = {'/': 'uno', '/1': 'uno', '/2': 'dos', '/3': 'tres', '/4': 'cuatro', '/5': 'cinco', '/6': 'seis', '/7': 'siete'};
     var per = [0,0,0,0];
@@ -32,6 +32,26 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos
     yo.avance = 'views/avance.html';
     yo.nav = 'views/nav.html';
     yo.encuesta = 'views/uno.html';
+    yo.alertas = {
+        'guardando': {
+            'visible': false,
+            'texto': 'Guardando...',
+            'estilo': 'warning',
+            'icono': 'fa-spinner fa-spin'
+        },
+        'correcto': {
+            'visible': false,
+            'texto': 'Datos guardados correctamente',
+            'estilo': 'success',
+            'icono': 'fa-check'
+        },
+        'error': {
+            'visible': false,
+            'texto': 'Ha ocurrido un error al intentar guardar los datos. Intenta de nuevo.',
+            'estilo': 'danger',
+            'icono': 'fa-exclamation-circle'
+        }
+    };
     yo.navegacion = [
         {'bloque': 'Datos', 'pag': 2, 'destino': 'Bloque A'},
         {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B'},
@@ -40,6 +60,8 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos
         {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'},
         {'bloque': 'E', 'pag': 7, 'destino': 'Resultados'}
     ];
+    yo.pag = 1;
+    yo.totalCampos = 51;
     yo.datos = {};
     $rootScope.$watch(function(){return yo.datos}, function(nuevo,viejo){
         angular.forEach(yo.datos, function(valor, llave) {
@@ -47,8 +69,17 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos
                 delete yo.datos[llave];
             }
         });
-        yo.dataAvance = [Object.keys(yo.datos).length, 51-Object.keys(yo.datos).length];
-        yo.porcentajeAvance = Math.floor(((yo.dataAvance[0]/51) * 100)+0.5) + '%';
+        yo.dataAvance = [Object.keys(yo.datos).length, yo.totalCampos-Object.keys(yo.datos).length];
+        yo.porcentajeAvance = Math.floor(((yo.dataAvance[0]/yo.totalCampos) * 100)+0.5) + '%';
+    }, true);
+    $rootScope.$watch(function(){return yo.alertas}, function(nuevo,viejo){
+        angular.forEach(nuevo, function(valor, llave) {
+            if (valor.visible == true) {
+                $timeout(function(){
+                    valor.visible = false;
+                },3000);
+            }
+        });
     }, true);
     yo.labelsAvance = ['Completado', 'Por completar'];
     yo.opcionesAvance = {
@@ -67,14 +98,15 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos
         } 
     };
     yo.avanzar = function(destino) {
+        yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
+        guardarDatos();
         var numP = destino - 3;
         if (destino > 2) {
             for (var i=0;i<per.length;i++) {
                 per[i] = per[i] + yo.datos[bloques[numP]+(i+1)];
                 int[i] = int[i] + yo.datos[bloques[numP]+(i+5)];
             }
-            guardarDatos();
         }
         yo.graficoData = [per,int];
         var tendencia = 0;
@@ -153,8 +185,18 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', function(datos
         });
     }
     function guardarDatos() {
-        // -------> Guarda datos en la db
-        console.log('Guardar data');
+        yo.alertas.guardando.visible = true;
+        datos.guardar(yo.datos).then(function(resp){
+            yo.alertas.guardando.visible = false;
+            if(resp.id) {
+                yo.datos.id = resp.id;
+            }
+            if (resp.salida[0] != '00000') {
+                yo.alertas.error.visible = true;
+            } else {
+                yo.alertas.correcto.visible = true;
+            }
+        });
     }
 }]);
 app.controller('paso1', ['json', function(json){
@@ -226,7 +268,13 @@ app.service('datos', ['$http', function($http){
             return promesa;
         },
         consulta: function(id) {
-            var promesa = $http.post('php/buscar.php?id='+id).then(function(resp){
+            var promesa = $http.get('php/buscar.php?id='+id).then(function(resp){
+                return resp.data;
+            });
+            return promesa;
+        },
+        guardar: function(datos) {
+            var promesa = $http.post('php/guardar.php',datos).then(function(resp){
                 return resp.data;
             });
             return promesa;
