@@ -68,9 +68,9 @@ $top-alerta: $navbar-margin-bottom * 1.95;
     }
     &.ng-leave {
         transition: 0.5s linear all;
-    }
-    &.ng-leave-active {
-        top: -10px;
+        &.ng-leave-active {
+            top: -10px;
+        }
     }
 }
 .avance-lineal {
@@ -85,6 +85,36 @@ $top-alerta: $navbar-margin-bottom * 1.95;
         .porcentaje {
             color: white;
             white-space: nowrap;
+        }
+    }
+}
+$alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse desde esta variable
+@media (max-width: $screen-sm-min) {
+    .navegacion {
+        position: fixed;
+        bottom: 0;
+        z-index: $zindex-navbar-fixed;
+        .nav2nivel {
+            position: absolute;
+            left: 0;
+            z-index: $zindex-navbar-fixed + 1;
+            transition: 0.5s ease-out all;
+            .col-xs-2-5 {
+                width: 20%;
+                float: left;
+            }
+            &.activo-add {
+                bottom: 0;
+            }
+            &.activo {
+                bottom: $alto-bar-nivel2nav;
+            }
+            &.activo-remove {
+                bottom: 0;
+            }
+        }
+        .col-xs-4 {
+            z-index: $zindex-navbar-fixed + 2;
         }
     }
 }

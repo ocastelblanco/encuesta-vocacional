@@ -57,8 +57,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', fu
         {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B'},
         {'bloque': 'B', 'pag': 4, 'destino': 'Bloque C'},
         {'bloque': 'C', 'pag': 5, 'destino': 'Bloque D'},
-        {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'},
-        {'bloque': 'E', 'pag': 7, 'destino': 'Resultados'}
+        {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'}
     ];
     yo.pag = 1;
     yo.totalCampos = 51;
