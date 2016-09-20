@@ -5,17 +5,17 @@ body {
 .contenido {
     position: relative;
     &.ng-enter {
-        transition: 0.5s linear all;
-        top: -2400px;
+        transition: 0.75s ease-out all;
+        @include ancho-desp(left);
         &.ng-enter-active {
-            top: 0;
+            left: 0;
         }
     }
     &.ng-leave {
-        transition: 0.5s linear all;
-        bottom: 0;
+        transition: 0.75s linear all;
+        left: 0;
         &.ng-leave-active {
-            bottom: -2400px;
+            @include ancho-desp(right);
         }
     }
     .formulario {
@@ -27,26 +27,39 @@ body {
         }
     }
 }
-.avance {
-    .grafico {
-        position: relative;
-        .porcentaje {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            font-weight: 800;
-            font-size: 1.25em;
-            margin-top: -0.75em;
-            margin-left: -1em;
+.cont-avance {
+    // position: fixed; // ------------------------> Pendiente de determinar si queda fixed para desktop
+    &.ng-enter {
+        transition: 0.75s ease-out all;
+        @include ancho-desp(left);
+        &.ng-enter-active {
+            left: 0;
+        }
+    }
+    .avance {
+        .grafico {
+            position: relative;
+            .porcentaje {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-weight: 800;
+                font-size: 1.25em;
+                margin-top: -0.75em;
+                margin-left: -1em;
+            }
         }
     }
 }
 $top-alerta: $navbar-margin-bottom * 1.95;
 .alerta-sup {
     position: fixed;
-    top: $top-alerta * 2;
     text-align: center;
     z-index: 999;
+    @media (max-width: $screen-xs-max) {
+        width: 100%;
+        top: $top-alerta * 2;
+    }
     @media (min-width: $screen-sm-min) {
         width: $container-sm;
         top: $top-alerta;
@@ -89,32 +102,51 @@ $top-alerta: $navbar-margin-bottom * 1.95;
     }
 }
 $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse desde esta variable
-@media (max-width: $screen-sm-min) {
+
+.cont-navegacion {
     .navegacion {
-        position: fixed;
-        bottom: 0;
-        z-index: $zindex-navbar-fixed;
-        .nav2nivel {
-            position: absolute;
-            left: 0;
-            z-index: $zindex-navbar-fixed + 1;
-            transition: 0.5s ease-out all;
-            .col-xs-2-5 {
-                width: 20%;
-                float: left;
-            }
-            &.activo-add {
-                bottom: 0;
-            }
-            &.activo {
-                bottom: $alto-bar-nivel2nav;
-            }
-            &.activo-remove {
-                bottom: 0;
+        //position: fixed; // ------------------------> Pendiente de determinar si queda fixed para desktop
+    }
+    @media (min-width: $screen-xs-min) {
+        &.ng-enter {
+            transition: 0.75s ease-out all;
+            @include ancho-desp(left);
+            &.ng-enter-active {
+                left: 0;
             }
         }
-        .col-xs-4 {
-            z-index: $zindex-navbar-fixed + 2;
+    }
+    @media (max-width: $screen-xs-max) {
+        .navegacion {
+            position: fixed; // ----------------------> Si la barra lateral es siempre fixed, eliminar esta linea
+            bottom: 0;
+            z-index: $zindex-navbar-fixed;
+            left: 0;
+            width: 100%;
+            .nav2nivel {
+                position: absolute;
+                left: 0;
+                z-index: $zindex-navbar-fixed + 1;
+                width: 100%;
+                transition: 0.5s ease-out all;
+                .col-xs-2-5 {
+                    width: 20%;
+                    float: left;
+                }
+                &.activo-add {
+                    bottom: 0;
+                }
+                &.activo {
+                    bottom: $alto-bar-nivel2nav;
+                }
+                &.activo-remove {
+                    bottom: 0;
+                }
+            }
+            .col-xs-4 {
+                z-index: $zindex-navbar-fixed + 2;
+                background-color: white; // --------------> Mientras los botones ocupan todo el espacio
+            }
         }
     }
 }

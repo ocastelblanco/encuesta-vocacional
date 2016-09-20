@@ -7,8 +7,17 @@ var app = angular.module('app', [
     'chart.js',
     'rzModule'
 ]);
-var tiposDocumentos = ['','Cédula de Ciudadanía','Tarjeta de Identidad','Cédula de Extranjería','Pasaporte','Registro Civil'];
-var tiposModalidades = ['','Presencial','Virtual'];
+var tiposDocumentos = [
+    {'num':'1','doc':'Cédula de Ciudadanía'},
+    {'num':'2','doc':'Tarjeta de Identidad'},
+    {'num':'3','doc':'Cédula de Extranjería'},
+    {'num':'4','doc':'Pasaporte'},
+    {'num':'5','doc':'Registro Civil'}
+];
+var tiposModalidades = [
+    {'num':'1','tipo':'Presencial'},
+    {'num':'2','tipo':'Virtual'}
+];
 var tiposLabels = [
     ['Artístico','Comunicativo'],
     ['Convencional','Analítico'],
@@ -21,7 +30,16 @@ app.controller('main', [function(){
 }]);
 app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', function(datos, $rootScope, $uibModal, $timeout){
     console.log('contenedor');
-    var rutasCont = {'/': 'uno', '/1': 'uno', '/2': 'dos', '/3': 'tres', '/4': 'cuatro', '/5': 'cinco', '/6': 'seis', '/7': 'siete'};
+    var rutasCont = {
+        '/': 'uno',
+        '/1': 'uno',
+        '/2': 'dos',
+        '/3': 'tres',
+        '/4': 'cuatro',
+        '/5': 'cinco',
+        '/6': 'seis',
+        '/7': 'siete'
+    };
     var per = [0,0,0,0];
     var int = [0,0,0,0];
     var bloques = ['A', 'B', 'C', 'D', 'E'];
@@ -170,11 +188,40 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', fu
     yo.grabarDatos = function() {
         guardarDatos();
     };
+    yo.tipoDocumento = function() {
+        var salida = 'text';
+        if (yo.datos.tipo == '1' || yo.datos.tipo == '2' || yo.datos.tipo == '5') {
+            salida = 'number';
+        }
+        return salida;
+    };
+    yo.limpiaNumDocumento = function(){
+        var regEx;
+        if (yo.datos.tipo == '1' || yo.datos.tipo == '2' || yo.datos.tipo == '5') {
+            regEx = /[0-9]/;
+        } else {
+            regEx = /[0-9a-zA-Z]/;
+        }
+        var endChar = String(yo.datos.documento).slice(-1);
+        var esNumero = regEx.test(endChar);
+        if (!esNumero) {
+            console.log('No es un número', yo.datos.documento);
+            yo.datos.documento = yo.datos.documento.slice(0,-1);
+        }
+    };
     function cargarDatos(id) {
         datos.consulta(id).then(function(resp){
             resp.celular = Number(resp.celular);
-            resp.tipo = String(tiposDocumentos.indexOf(resp.tipo));
-            resp.modalidad = String(tiposModalidades.indexOf(resp.modalidad));
+            angular.forEach(tiposDocumentos, function(valor, llave) {
+                if (valor.doc == resp.tipo) {
+                    resp.tipo = valor.num;
+                } 
+            });
+            angular.forEach(tiposModalidades, function(valor, llave) {
+                if (valor.tipo == resp.modalidad) {
+                    resp.modalidad = valor.num;
+                } 
+            });
             angular.forEach(bloques,function(val,key){
                 for(var i=1;i<9;i++) {
                     resp[val+String(i)] = Number(resp[val+String(i)]);

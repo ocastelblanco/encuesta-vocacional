@@ -15,13 +15,13 @@
         <div class="row">
             <div class="col-sm-5 col-izq form-group has-feedback" ng-class="{'has-success': cont.datos.tipo}">
                 <label for="tipo">Tipo de documento</label>
-                <select id="tipo" class="form-control" ng-model="cont.datos.tipo" ng-options="tipo as valor for (tipo,valor) in p1.tipos">
+                <select id="tipo" class="form-control" ng-model="cont.datos.tipo" ng-options="valor.num as valor.doc for (key,valor) in p1.tipos">
                 </select>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.tipo"></i>
             </div>
             <div class="col-sm-7 col-der form-group has-feedback" ng-class="{'has-success': cont.datos.documento}">
                 <label for="documento">Número de documento</label>
-                <input type="text" class="form-control" id="documento" placeholder="Número de documento de identidad" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)">
+                <input type="text" class="form-control" id="documento" placeholder="Número de documento de identidad" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)" ng-change="cont.limpiaNumDocumento()" ng-disabled="!cont.datos.tipo">
                 <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.documento"></i>
             </div>
         </div>

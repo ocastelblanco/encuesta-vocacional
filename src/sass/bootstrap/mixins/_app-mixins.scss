@@ -1,0 +1,23 @@
+// Aplica anchos para el desplazamiento del contenido
+@mixin ancho-desp($propiedad) {
+    @if $propiedad == left {
+        @each $ancho in $screen-xs-max, $screen-sm-max, $screen-md-max, $screen-lg-min {
+            @media (max-width: $ancho) {
+                left: $ancho + 10;
+            }
+        }
+        @media (min-width: $screen-lg-min) {
+            left: $screen-lg-min * 2;
+        }
+    }
+    @if $propiedad == right {
+        @each $ancho in $screen-xs-max, $screen-sm-max, $screen-md-max, $screen-lg-min {
+            @media (max-width: $ancho) {
+                left: -($ancho + 10);
+            }
+        }
+        @media (min-width: $screen-lg-min) {
+            left: -($screen-lg-min * 2);
+        }
+    }
+}
