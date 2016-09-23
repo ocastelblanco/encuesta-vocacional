@@ -1,6 +1,6 @@
 body {
     padding-top: 70px;
-    padding-bottom: 70px;
+    // padding-bottom: 70px; -------> desactivado mientras el footer no sea fixed
 }
 .contenido {
     position: relative;
@@ -36,17 +36,41 @@ body {
             left: 0;
         }
     }
+    .avance-lineal {
+        .progress {
+            margin: 0;
+            .progress-bar {
+                min-width: 2em;
+                background-image: linear-gradient(to right, rgba(255,0,0,1), rgba(255,128,0,1), rgba(255,0,0,1));
+                .porcentaje {
+                    color: white;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
     .avance {
         .grafico {
             position: relative;
             .porcentaje {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                font-weight: 800;
-                font-size: 1.25em;
-                margin-top: -0.75em;
-                margin-left: -1em;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    font-size: 2.75em;
+                    margin-left: -2em;
+                    margin-top: -0.5em;
+                    width: 4em;
+                    text-align: center;
+                p {
+                    display: block;
+                    margin-bottom: 0;
+                    &.titulo {
+                        font-size: 0.4em;
+                    }
+                    &.valor {
+                        font-weight: 800;
+                    }
+                }
             }
         }
     }
@@ -83,21 +107,6 @@ $top-alerta: $navbar-margin-bottom * 1.95;
         transition: 0.5s linear all;
         &.ng-leave-active {
             top: -10px;
-        }
-    }
-}
-.avance-lineal {
-    .titulo {
-        display: inline-block;
-        padding-left: $navbar-padding-horizontal;
-    }
-    .progress {
-        display: inline-block;
-        margin: 0 $navbar-padding-horizontal 0 $navbar-padding-horizontal;
-        width: 70%;
-        .porcentaje {
-            color: white;
-            white-space: nowrap;
         }
     }
 }

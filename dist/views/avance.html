@@ -1,9 +1,14 @@
-<div class="avance">
-    <h3>Avance de la encuesta</h3>
+<div class="avance-lineal hidden-sm hidden-md hidden-lg">
+    <uib-progressbar max="cont.totalCampos" value="cont.dataAvance[0]">
+        <span class="porcentaje">{{cont.porcentajeAvance}}</span>
+    </uib-progressbar>
+</div>
+<div class="avance hidden-xs">
     <div class="grafico">
-        <canvas id="doughnut" class="chart chart-doughnut" chart-data="cont.dataAvance" chart-labels="cont.labelsAvance" chart-options="cont.opcionesAvance"></canvas>
+        <canvas id="doughnut" class="chart chart-doughnut" chart-data="cont.dataAvance" chart-labels="cont.labelsAvance" chart-options="cont.opcionesAvance" chart-colors="cont.coloresAvance"></canvas>
         <div class="porcentaje">
-            {{cont.porcentajeAvance}}
+            <p class="titulo">Tu avance es</p>
+            <p class="valor">{{cont.porcentajeAvance}}</p>
         </div>
     </div>
 </div>

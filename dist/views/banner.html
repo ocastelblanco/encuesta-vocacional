@@ -3,12 +3,6 @@
         <div class="navbar-header">
             <a class="navbar-brand">Politécnico</a>
         </div>
-        <div class="nav navbar-nav avance-lineal hidden-sm hidden-md hidden-lg">
-            <span class="titulo">Avance</span>
-            <uib-progressbar max="cont.totalCampos" value="cont.dataAvance[0]">
-                <span class="porcentaje">{{cont.porcentajeAvance}}</span>
-            </uib-progressbar>
-        </div>
     </div>
 </nav>
 <div ng-repeat="alerta in cont.alertas" class="alerta-sup alert alert-{{alerta.estilo}} alert-dismissible" role="alert" ng-if="alerta.visible">

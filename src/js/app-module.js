@@ -28,7 +28,7 @@ var tiposLabels = [
 app.controller('main', [function(){
     console.log('main');
 }]);
-app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', function(datos, $rootScope, $uibModal, $timeout){
+app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$scope', function(datos, $rootScope, $uibModal, $timeout, $scope){
     console.log('contenedor');
     var rutasCont = {
         '/': 'uno',
@@ -112,8 +112,27 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', fu
                     return data.labels[tooltipItem.index] + ' ' + porcentaje + '%';
                 }
             }
-        } 
+        },
+        rotation: 0.8 * Math.PI,
+        circumference: 1.4 * Math.PI,
+        cutoutPercentage: 85
     };
+    var changeColor = function(chart){
+        var ctx = chart.chart.ctx;
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(220,220,220,1)');
+        var gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient2.addColorStop(0, 'rgba(255,0,0,0.5)');
+        gradient2.addColorStop(1, 'rgba(255,255,0,0.5)');
+        chart.chart.config.data.datasets[0].backgroundColor = [gradient2, gradient];
+    };
+    $scope.$on('chart-create', function (evt, chart) {
+        if (chart.chart.canvas.id === 'doughnut') {
+          changeColor(chart);
+          chart.update();
+        }
+    });
+    yo.coloresAvance = ['#F7464A','#DCDCDC'];
     yo.avanzar = function(destino) {
         yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
@@ -187,13 +206,6 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', fu
     }];
     yo.grabarDatos = function() {
         guardarDatos();
-    };
-    yo.tipoDocumento = function() {
-        var salida = 'text';
-        if (yo.datos.tipo == '1' || yo.datos.tipo == '2' || yo.datos.tipo == '5') {
-            salida = 'number';
-        }
-        return salida;
     };
     yo.limpiaNumDocumento = function(){
         var regEx;
