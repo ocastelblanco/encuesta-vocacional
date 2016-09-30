@@ -1,15 +1,12 @@
-<div class="container" ng-controller="contenedor as cont" ng-cloak>
+<div class="container">
     <ng-include src="cont.banner"></ng-include>
     <div class="row">
-        <div class="col-sm-3 col-sm-push-9">
-            <ng-include class="cont-avance" src="cont.avance"></ng-include>
+        <div class="col-sm-6">
+            <ng-include class="cont-intro" src="cont.intro"></ng-include>
         </div>
         <div class="col-sm-6">
-            <ng-include class="contenido" src="cont.encuesta"></ng-include>
+            <ng-include class="contenido" src="cont.datosP"></ng-include>
         </div>
-        <div class="col-sm-3 col-sm-pull-9">
-            <ng-include class="cont-navegacion" src="cont.nav"></ng-include>
-        </div>
-    </div>
+    </div><!-- /.row -->
     <ng-include src="cont.footer" class="hidden-xs"></ng-include>
 </div><!-- /.container -->

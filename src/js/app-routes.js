@@ -4,7 +4,7 @@ var app = angular.module('app');
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl :'views/inicio.html'
+            templateUrl :'views/contenedor.html'
         }).otherwise({
             redirectTo: '/'
         });

@@ -45,11 +45,15 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     var bloques = ['A', 'B', 'C', 'D', 'E'];
     var preCargaDatos = false;
     var yo = this;
+    yo.contenedor = 'views/inicio.html';
     yo.banner = 'views/banner.html';
     yo.footer = 'views/footer.html';
+    yo.intro = 'views/intro.html';
+    yo.datosP = 'views/uno.html';
     yo.avance = 'views/avance.html';
     yo.nav = 'views/nav.html';
-    yo.encuesta = 'views/uno.html';
+    yo.encuesta = 'views/dos.html';
+    yo.resultados = 'views/siete.html';
     yo.alertas = {
         'guardando': {
             'visible': false,
@@ -134,6 +138,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     });
     yo.coloresAvance = ['#F7464A','#DCDCDC'];
     yo.avanzar = function(destino) {
+        console.log('Destino', destino);
         yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
         guardarDatos();
@@ -143,6 +148,16 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
                 per[i] = per[i] + yo.datos[bloques[numP]+(i+1)];
                 int[i] = int[i] + yo.datos[bloques[numP]+(i+5)];
             }
+        }
+        switch (destino) {
+            case 1:
+                yo.contenedor = 'views/inicio.html';
+                break;
+            case 7:
+                yo.contenedor = 'views/resultados.html';
+                break;
+            default:
+                yo.contenedor = 'views/encuesta.html';
         }
         yo.graficoData = [per,int];
         var tendencia = 0;
