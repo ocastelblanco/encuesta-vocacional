@@ -65,6 +65,9 @@ module.exports = function(grunt) {
                     {
                         expand: true, cwd: 'node_modules/font-awesome/fonts/', src: '**', dest: 'dist/assets/fonts/'
                     },
+                    {
+                        expand: true, cwd: 'node_modules/bourbon/app/assets/stylesheets/', src: '**', dest: 'src/sass/bourbon/'
+                    },
                 ],
             },
         }
@@ -75,6 +78,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
     
-    grunt.registerTask('default', ['sass', 'copy', 'watch']);
-    grunt.registerTask('actualizar', ['sass', 'copy', 'uglify']);
+    grunt.registerTask('default', ['copy', 'sass', 'watch']);
+    grunt.registerTask('actualizar', ['copy', 'sass', 'uglify']);
 };
