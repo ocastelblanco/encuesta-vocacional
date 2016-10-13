@@ -2,6 +2,25 @@
 body {
     padding-top: 70px;
     padding-bottom: 70px; //-------> activado mientras el footer es fixed
+    a {
+        cursor: pointer;
+    }
+}
+canvas#grafico0,
+canvas#grafico1,
+canvas#grafico2,
+canvas#grafico3 {
+    width: 100%;
+}
+.grafico-resultados {
+    @media (min-width: $screen-xs-min) {
+        .dos-graficos:first-of-type {
+            padding-right: 0;
+        }
+        .dos-graficos:last-of-type {
+            padding-left: 0;
+        }
+    }
 }
 @include keyframes(fade-out) {
     33%{

@@ -36,26 +36,45 @@ for ($i=0;$i<count($data);$i++) {
         $celda = $letraCeldas[$e].($i+2);
         if ($e > 9 && $e < count($campos)-1) {
             $cont = $valoresPreguntas[$data[$i][$campos[$e]]];
+            //$cont = $data[$i][$campos[$e]];
         } else {
             $cont = $data[$i][$campos[$e]];
         }
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $cont);
     }
 }
-for ($n=0;$n<4;$n++) {
+for ($n=0;$n<8;$n++) {
     $celda = $letraCeldas[count($campos)+$n]."1";
     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $labels[$n]);
 }
 for ($i=0;$i<count($data);$i++) {
+    $posCelda = 0;
     for ($n=1;$n<5;$n++) {
+        $resp1[$i] = 0;
+        $resp2[$i] = 0;
+        for ($l=0;$l<count($bloques);$l++) {
+            $resp1[$i] = $resp1[$i] + $data[$i][$bloques[$l].$n];
+            $resp2[$i] = $resp2[$i] + $data[$i][$bloques[$l].($n+4)];
+        }
+        $celda1 = $letraCeldas[count($campos)+$posCelda].($i+2);
+        $celda2 = $letraCeldas[count($campos)+$posCelda+1].($i+2);
+        $posCelda += 2;
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda1, $resp1[$i]);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda2, $resp2[$i]);
+    }
+}
+/*
+for ($i=0;$i<count($data);$i++) {
+    for ($n=1;$n<9;$n++) {
         $resp[$i] = 0;
         for ($l=0;$l<count($bloques);$l++) {
-            $resp[$i] = $resp[$i] + $data[$i][$bloques[$l].$n] + $data[$i][$bloques[$l].($n+4)];
+            $resp[$i] = $resp[$i] + $data[$i][$bloques[$l].$n];
         }
         $celda = $letraCeldas[count($campos)-1+$n].($i+2);
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $resp[$i]);
     }
 }
+*/
 for ($i=0;$i<count($letraCeldas);$i++)
     $objPHPExcel->getActiveSheet()->getColumnDimension($letraCeldas[$i])->setAutoSize(true);
 $styleArray = array('font' => array('bold' => true));

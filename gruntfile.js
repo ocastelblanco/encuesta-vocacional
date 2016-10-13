@@ -45,7 +45,8 @@ module.exports = function(grunt) {
                             'node_modules/angular-ui-grid/ui-grid.min.js',
                             'node_modules/angular-chart.js/dist/angular-chart.min.js',
                             'node_modules/angular-chart.js/node_modules/chart.js/dist/Chart.min.js',
-                            'node_modules/angularjs-slider/dist/rzslider.min.js'
+                            'node_modules/angularjs-slider/dist/rzslider.min.js',
+                            'node_modules/paper/dist/paper-core.min.js'
                         ],
                         dest: 'dist/assets/js/',
                         flatten: true

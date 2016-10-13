@@ -1,4 +1,4 @@
-/* global angular */
+/* global angular paper */
 var app = angular.module('app', [
     'ngRoute',
     'ngTouch',
@@ -24,6 +24,7 @@ var tiposLabels = [
     ['Empresarial','Emprendedor'],
     ['Social','Investigador']
 ];
+var graficoData;
 // Controladores
 app.controller('main', [function(){
     console.log('main');
@@ -138,26 +139,15 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     });
     yo.coloresAvance = ['#F7464A','#DCDCDC'];
     yo.avanzar = function(destino) {
-        console.log('Destino', destino);
         yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
-        guardarDatos();
+        //guardarDatos();
         var numP = destino - 3;
         if (destino > 2) {
             for (var i=0;i<per.length;i++) {
                 per[i] = per[i] + yo.datos[bloques[numP]+(i+1)];
                 int[i] = int[i] + yo.datos[bloques[numP]+(i+5)];
             }
-        }
-        switch (destino) {
-            case 1:
-                yo.contenedor = 'views/inicio.html';
-                break;
-            case 7:
-                yo.contenedor = 'views/resultados.html';
-                break;
-            default:
-                yo.contenedor = 'views/encuesta.html';
         }
         yo.graficoData = [per,int];
         var tendencia = 0;
@@ -167,6 +157,17 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
                 yo.tendencia = tiposLabels[llave][0]+'-'+tiposLabels[llave][1];
             }
         });
+        switch (destino) {
+            case 1:
+                yo.contenedor = 'views/inicio.html';
+                break;
+            case 7:
+                graficoData = yo.graficoData;
+                yo.contenedor = 'views/resultados.html';
+                break;
+            default:
+                yo.contenedor = 'views/encuesta.html';
+        }
     };
     yo.opcionesSlider = {
         floor: 0,
@@ -315,13 +316,104 @@ app.controller('paso6', ['json', function(json){
         yo.preguntas = resp[4];
     });
 }]);
-app.controller('paso7', [function(){
+app.controller('paso7', ['$window', function($window){
     console.log('paso7');
     var yo = this;
     yo.labels = tiposLabels;
     yo.series = ['Personalidad', 'Interés'];
     yo.modalidades = tiposModalidades;
+    prepararGraficos();
+    angular.element($window).bind('resize', function(){
+        prepararGraficos();
+    });
 }]);
+function prepararGraficos() {
+    var graficos = [];
+    var totalValores = 0;
+    var dataGraficos = [];
+    angular.forEach(graficoData[0], function(valor, llave) {
+        graficos[llave] = new paper.PaperScope();
+        graficos[llave].setup('grafico'+llave);
+        totalValores += valor + graficoData[1][llave];
+        dataGraficos.push(valor + graficoData[1][llave]);
+    });
+	paper = graficos[0];
+	var ancho = paper.view.size.width;
+	var alto = ancho + (ancho * 0.1) + 24;
+	paper.view.viewSize.height = alto;
+	var colorGraficos = [{
+	        'baseBack': new paper.Color(1,0.4,0,0.15),
+	        'baseFront': new paper.Color(1,0.4,0,0.25),
+	        'arcoBack': new paper.Color(1,0.4,0,0.15),
+	        'arcoFront': new paper.Color(1,0.4,0,0.5)
+	    },{
+	        'baseBack': new paper.Color(0,0.65,0.85,0.15),
+	        'baseFront': new paper.Color(0,0.65,0.85,0.25),
+	        'arcoBack': new paper.Color(0,0.65,0.85,0.15),
+	        'arcoFront': new paper.Color(0,0.65,0.85,0.5)
+    }];
+	angular.forEach(graficos, function(valor, llave) {
+        paper = valor;
+	    paper.view.viewSize.height = alto;
+        var fondo = paper.Path.Rectangle(new paper.Point(0,0),new paper.Point(ancho,alto));
+        fondo.fillColor = new paper.Color(0,0,0,0.25);
+        var porcentaje = dataGraficos[llave] / totalValores;
+        var color;
+        if (dataGraficos[llave] == Math.max.apply(Math, dataGraficos)) {
+            color = colorGraficos[0];
+        } else {
+            color = colorGraficos[1];
+        }
+        dibujarGrafico(paper, ancho, porcentaje, tiposLabels[llave], color);
+    });
+}
+function dibujarGrafico(paper, ancho, porcentaje, titulo, color) {
+    var radioBack = ancho / 2;
+    var radioFront = radioBack * 0.8;
+    var x = ancho / 2;
+    var y = ancho / 2;
+    var centro = new paper.Point(x,y);
+    var baseBack = new paper.Path.Circle(centro,radioBack);
+    baseBack.fillColor = color.baseBack;
+    var arcoBack = arco(centro,radioBack,porcentaje,'arcoBack');
+    var baseFront = new paper.Path.Circle(centro,radioFront);
+    baseFront.fillColor = color.baseFront;
+    var arcoFront = arco(centro,radioFront,0.01,'arcoFront');
+    function arco(cnt,radio,pcj,col) {
+        var x1 = (radio * Math.cos(0)) + x;
+        var y1 = (radio * Math.sin(0)) + y;
+        var x2 = (radio * Math.cos(Math.PI*pcj)) + x;
+        var y2 = (radio * Math.sin(Math.PI*pcj)) + y;
+        var x3 = (radio * Math.cos(Math.PI*pcj*2)) + x;
+        var y3 = (radio * Math.sin(Math.PI*pcj*2)) + y;
+        var from = new paper.Point(x1, y1);
+        var through = new paper.Point(x2, y2);
+        var to = new paper.Point(x3, y3);
+        var path = new paper.Path.Arc(from, through, to);
+        path.add(cnt);
+        path.fillColor = color[col];
+        path.rotate(-90,cnt);
+    }
+	paper.view.onFrame = function(evento) {
+        var avance = evento.count * (porcentaje / 60);
+        if (avance <= porcentaje) {
+	        var arcoFront = arco(centro,radioFront,avance,'arcoFront');
+        }
+        if (avance == porcentaje) {
+            var punto = new paper.Path.Circle(centro,5);
+            punto.fillColor = new paper.Color(1,1,1,1);
+            var linea = new paper.Path.Line(centro, new paper.Point(x,ancho * 1.05));
+            linea.strokeColor = new paper.Color(1,1,1,1);
+            linea.strokeWidth = 2;
+            var texto = new paper.PointText(new paper.Point(x,(ancho * 1.1)));
+            texto.content = titulo[0]+'\n'+titulo[1];
+            texto.fillColor = 'white';
+            texto.fontSize = '12px';
+            texto.justification = 'center';
+        }
+	};
+	paper.view.draw();
+}
 // Servicios
 app.service('json', ['$http', function($http){
     var json = function(datos){
