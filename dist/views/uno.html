@@ -1,5 +1,5 @@
 <div ng-controller="paso1 as p1">
-    <h1>Encuesta vocacional <small>Datos personales</small></h1>
+    <h1>Regístrate ahora</h1>
     <h6>Debe completar todos los campos para continuar.</h6>
     <div class="formulario">
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.nombres}">
@@ -18,7 +18,7 @@
                 <select id="tipo" class="form-control" ng-model="cont.datos.tipo" ng-options="valor.num as valor.doc for (key,valor) in p1.tipos">
                 </select>
                 <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.tipo"></i>
-            </div>
+            <div>
             <div class="col-sm-7 col-der form-group has-feedback" ng-class="{'has-success': cont.datos.documento}">
                 <label for="documento">Número de documento</label>
                 <input type="text" class="form-control" id="documento" placeholder="Número de documento de identidad" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)" ng-change="cont.limpiaNumDocumento()" ng-disabled="!cont.datos.tipo">

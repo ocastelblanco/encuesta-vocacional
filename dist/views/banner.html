@@ -1,10 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand">Politécnico</a>
-            <a ng-click="cont.avanzar(7)">Avanzar</a>
+            <div class="navbar-brand">
+                <img src="assets/img/logoh.png">
+            </div>
         </div>
-    </div>
+        <div class="navbar-right hidden-xs">
+            <h4>Lorem ipsum dolor sit amet,<small>consectetur adipiscing elit.</small></h3>
+        </div>
+    </div><!-- ./container -->
 </nav>
 <div ng-repeat="alerta in cont.alertas" class="alerta-sup alert alert-{{alerta.estilo}} alert-dismissible" role="alert" ng-if="alerta.visible">
     <button type="button" class="close" aria-label="Close" ng-click="alerta.visible=!alerta.visible">

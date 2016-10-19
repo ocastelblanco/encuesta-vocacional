@@ -1,6 +1,6 @@
 // Estilos
 body {
-    padding-top: 70px;
+    padding-top: 90px;
     padding-bottom: 70px; //-------> activado mientras el footer es fixed
     a {
         cursor: pointer;
@@ -48,7 +48,7 @@ canvas#grafico3 {
         left: 0;
         padding: 0;
         top: 0;
-        background: rgba(#FFF, 0.4);
+        background: rgba(#000, 0.4);
     }
     li{
         height: 100%;
@@ -74,6 +74,51 @@ canvas#grafico3 {
             background-image: url(../img/03.jpg);
             @include animation-delay(14s);
         }
+}
+.navbar {
+    .navbar-right {
+        color: $navbar-default-brand-color;
+        h4 {
+            margin: 0;
+            padding-top: $navbar-padding-vertical * 0.7058823529;
+            small {
+                display: block;
+                line-height: 1.375;
+                color: $navbar-default-brand-color;
+                font-weight: $headings-font-weight;
+            }
+        }
+    }
+}
+$alto-footer: 0.75; // La altura proporcional del footer con respecto al header
+.footer {
+    .navbar-brand {
+            padding-right: $font-size-base;
+            height: $navbar-height * $alto-footer;
+            margin-top: 0 !important;
+        >img {
+            height: ($navbar-height - $navbar-padding-vertical) * $alto-footer;
+            width: auto;
+        }
+    }
+    .nav {
+        li {
+            div {
+                margin: 0;
+                font-size: $font-size-small;
+                border-left: 2px solid #fff;
+                padding: 0 $font-size-base;
+            }
+            div:first-of-type {
+                margin-top: 1em;
+            }
+        }
+        li.no-linea {
+            div {
+                border-left: none;
+            }
+        }
+    }
 }
 .contenido {
     position: relative;
