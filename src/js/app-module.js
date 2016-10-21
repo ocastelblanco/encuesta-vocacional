@@ -8,6 +8,7 @@ var app = angular.module('app', [
     'rzModule'
 ]);
 var tiposDocumentos = [
+    //{'num':'','doc':'Tipo de Documento'},
     {'num':'1','doc':'Cédula de Ciudadanía'},
     {'num':'2','doc':'Tarjeta de Identidad'},
     {'num':'3','doc':'Cédula de Extranjería'},
@@ -76,11 +77,11 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
         }
     };
     yo.navegacion = [
-        {'bloque': 'Datos', 'pag': 2, 'destino': 'Bloque A'},
-        {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B'},
-        {'bloque': 'B', 'pag': 4, 'destino': 'Bloque C'},
-        {'bloque': 'C', 'pag': 5, 'destino': 'Bloque D'},
-        {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E'}
+        {'bloque': 'Datos', 'pag': 2, 'destino': 'Bloque A', 'icono': 'icono-bloque-a'},
+        {'bloque': 'A', 'pag': 3, 'destino': 'Bloque B', 'icono': 'icono-bloque-b'},
+        {'bloque': 'B', 'pag': 4, 'destino': 'Bloque C', 'icono': 'icono-bloque-c'},
+        {'bloque': 'C', 'pag': 5, 'destino': 'Bloque D', 'icono': 'icono-bloque-d'},
+        {'bloque': 'D', 'pag': 6, 'destino': 'Bloque E', 'icono': 'icono-bloque-e'}
     ];
     yo.pag = 1;
     yo.totalCampos = 51;
@@ -138,6 +139,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
         }
     });
     yo.coloresAvance = ['#F7464A','#DCDCDC'];
+     // ---------------------------------------------------------------> Activar guardarDatos() en producción
     yo.avanzar = function(destino) {
         yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
@@ -194,7 +196,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
         }
         if (!yo.datos.nombres || !yo.datos.apellidos || !yo.datos.tipo ||
             !yo.datos.documento || !yo.datos.email || !yo.datos.celular ||
-            !yo.datos.departamento || !yo.datos.ciudad) {
+            !yo.datos.departamento || !yo.datos.ciudad || !yo.terminos) {
             salida = false;
         }
         return !salida;
@@ -280,6 +282,18 @@ app.controller('paso1', ['json', function(json){
         yo.municipios = resp;
     });
     yo.tipos = tiposDocumentos;
+    yo.placeDoc = 'Debes seleccionar un Tipo de documento';
+    yo.placeMun = 'Debes seleccionar un Departamento';
+    yo.cambiaTipo = function(){
+        yo.placeDoc = 'Número de documento de identidad'
+    };
+    yo.cambiaDepto = function(tipo){
+        if (tipo) {
+            yo.placeMun = 'Municipio';
+        } else {
+            yo.placeMun = 'Debe seleccionar un Departamento';
+        }
+    };
 }]);
 app.controller('paso2', ['json', function(json){
     console.log('paso2');
@@ -417,7 +431,7 @@ function dibujarGrafico(paper, ancho, porcentaje, titulo, color) {
 // Servicios
 app.service('json', ['$http', function($http){
     var json = function(datos){
-        var promesa = $http.get('assets/'+datos+'.json').then(function(resp){
+        var promesa = $http.get('assets/json/'+datos+'.json').then(function(resp){
             return resp.data;
         });
         return promesa;

@@ -21,3 +21,70 @@
         }
     }
 }
+// Estilo especial del boton de menu
+@mixin button-menu($color, $background, $background-activo) {
+    color: $color;
+    background-color: $background;
+    border-width: 0 0 0 1px;
+    border-radius: 0;
+    padding: 20px 0;
+    font-family: $font-family-condensed;
+    &:focus,
+    &.focus,
+    &:hover {
+        color: $color;
+        background-color: $background;
+        border-color: $color;
+    }
+    &:active,
+    &.active  {
+        color: $color;
+        background-color: $background-activo;
+        border-color: transparent;
+        &:hover,
+        &:focus,
+        &.focus {
+            color: $color;
+            background-color: $background-activo;
+            border-color: $color;
+        }
+    }
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &:hover,
+        &:focus,
+        &.focus {
+            background-color: $background-activo;
+            border-color: $color;
+        }
+    }
+    .badge {
+        color: $background;
+        background-color: $color;
+    }
+}
+@mixin columnas-intro($i: 1, $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}") {
+  @for $i from (1 + 1) through $grid-columns {
+    $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}";
+  }
+  #{$list} {
+    position: relative;
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+    // Inner gutter via padding
+    @media (min-width: $screen-md-min) {
+      padding-left:  50px;//ceil(($grid-gutter-width / 2));
+      padding-right: 50px;//floor(($grid-gutter-width / 2));
+    }
+    @media (max-width: $screen-sm-max) {
+      padding-left:  ceil(($grid-gutter-width / 2));
+      padding-right: floor(($grid-gutter-width / 2));
+    }
+  }
+}

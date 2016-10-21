@@ -1,7 +1,7 @@
 // Estilos
 body {
-    padding-top: 90px;
-    padding-bottom: 70px; //-------> activado mientras el footer es fixed
+    padding-top: $height-header;
+    padding-bottom: $height-footer; //-------> activado mientras el footer es fixed
     a {
         cursor: pointer;
     }
@@ -90,7 +90,7 @@ canvas#grafico3 {
         }
     }
 }
-$alto-footer: 0.75; // La altura proporcional del footer con respecto al header
+$alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional del footer con respecto al header
 .footer {
     .navbar-brand {
             padding-right: $font-size-base;
@@ -120,7 +120,37 @@ $alto-footer: 0.75; // La altura proporcional del footer con respecto al header
         }
     }
 }
-.contenido {
+.modal {
+    .modal-body {
+        display: table;
+        .exclamacion {
+            color: $brand-danger;
+            font-size: 2.5em;
+            display: table-cell;
+        }
+        .texto {
+            display: table-cell;
+            font-size: $font-size-large;
+            padding-left: $font-size-large;
+            vertical-align: middle;
+        }
+    }
+    .modal-footer {
+        button {
+            text-transform: uppercase;
+            font-family: $font-family-condensed;
+            font-weight: bold;
+        }
+    }
+}
+.intro {
+    margin-top: $line-height-computed;
+}
+.contenido-intro {
+    @include columnas-intro();
+}
+.contenido,
+.contenido-intro {
     position: relative;
     &.ng-enter {
         transition: 0.75s ease-out all;
@@ -137,10 +167,51 @@ $alto-footer: 0.75; // La altura proporcional del footer con respecto al header
         }
     }
     .formulario {
-        .col-izq,
-        .col-der {
-            i.form-control-feedback {
-                right: $font-size-base;
+        .placeholder-option {
+            display: none;
+            color: #ccc;
+        }
+        .boton-avanzar {
+            text-transform: uppercase;
+            font-family: $font-family-condensed;
+            font-weight: bold;
+        }
+        .checkbox {
+            text-transform: uppercase;
+            &.has-feedback {
+                i {
+                     top: 0;       
+                }
+            }
+        }
+        ::-webkit-input-placeholder,
+        :-ms-input-placeholder,
+        ::-moz-placeholder,
+        :-moz-placeholder {
+            color: $placeholder-color;
+        }
+        .no-activo {
+            color: $placeholder-color;
+        }
+    }
+    .test {
+        padding-bottom: $font-size-base;
+        margin-left: -$font-size-base;
+        margin-right: -$font-size-base;
+        .formulario-test {
+            .form-group {
+                color: #333;
+                background-color: #fff;
+                padding: $font-size-base;
+                margin-top: $form-group-margin-bottom;
+                box-shadow: 0 0 4px #ccc;
+            }
+        }
+        .nav-botones-inf {
+            margin: 0;
+            div {
+                padding-left: 6px;
+                padding-right: 0;
             }
         }
     }
@@ -168,22 +239,37 @@ $alto-footer: 0.75; // La altura proporcional del footer con respecto al header
         }
     }
     .avance {
+        color: #333;
+        background-color: #fff;
+        padding: $font-size-base;
+        margin-top: $form-group-margin-bottom;
+        box-shadow: 0 0 4px #ccc;
         .grafico {
             position: relative;
             .porcentaje {
                     position: absolute;
                     top: 50%;
                     left: 50%;
-                    font-size: 2.75em;
+                    text-align: center;
                     margin-left: -2em;
                     margin-top: -0.5em;
                     width: 4em;
-                    text-align: center;
+                    @media (max-width: $screen-md-max) {
+                        font-size: 1.75em;
+                    }
+                    @media (min-width: $screen-lg-min) {
+                        font-size: 2.75em;
+                    }
                 p {
                     display: block;
                     margin-bottom: 0;
                     &.titulo {
-                        font-size: 0.4em;
+                        @media (max-width: $screen-md-max) {
+                            font-size: 0.3em;
+                        }
+                        @media (min-width: $screen-lg-min) {
+                            font-size: 0.35em;
+                        }
                     }
                     &.valor {
                         font-weight: 800;
@@ -232,9 +318,29 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
 
 .cont-navegacion {
     .navegacion {
-        //position: fixed; // ------------------------> Pendiente de determinar si queda fixed para desktop
+        position: fixed; // -------------------------> Todo es fixed
+        div {
+            padding: 0;
+        } 
+        .btn-menu {
+            @include button-menu($btn-primary-color, $nav-bg, $brand-danger);
+        }
     }
     @media (min-width: $screen-xs-min) {
+        position: absolute;
+        .navegacion {
+            width: 13.5%; // ------------------------> Valor que determina el ancho de la barra de botones
+            top: $height-header;
+            height: 1080px;
+            background-color: $nav-bg;
+            .btn-menu {
+                img {
+                    width: $font-size-h3 * 0.9;
+                    height: auto;
+                    margin-right: $font-size-h3 * 0.9;
+                }
+            }
+        }
         &.ng-enter {
             transition: 0.75s ease-out all;
             @include ancho-desp(left);
@@ -245,11 +351,23 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
     }
     @media (max-width: $screen-xs-max) {
         .navegacion {
-            position: fixed; // ----------------------> Si la barra lateral es siempre fixed, eliminar esta linea
+            //position: fixed; // ----------------------> Si la barra lateral es siempre fixed, eliminar esta linea
             bottom: 0;
             z-index: $zindex-navbar-fixed;
             left: 0;
             width: 100%;
+            height: auto;
+            top: inherit;
+            .btn-menu {
+                height: $font-size-h3 * 1.86;
+                padding: 0;
+                img {
+                    width: auto;
+                    height: $font-size-h3;
+                    margin: auto;
+                    display: block;
+                }
+            }
             .nav2nivel {
                 position: absolute;
                 left: 0;

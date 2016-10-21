@@ -4,9 +4,14 @@
             <div class="navbar-brand">
                 <img src="assets/img/logoh.png">
             </div>
+            <ul class="nav navbar-nav navbar-left">
+                <li ng-repeat="num in [1, 2, 3, 4, 5, 6, 7]">
+                    <a ng-click="cont.avanzar(num)">{{num}}</a>
+                </li>
+            </ul>
         </div>
         <div class="navbar-right hidden-xs">
-            <h4>Lorem ipsum dolor sit amet,<small>consectetur adipiscing elit.</small></h3>
+            <h4>Elige bien tu camino a la U</h3>
         </div>
     </div><!-- ./container -->
 </nav>
