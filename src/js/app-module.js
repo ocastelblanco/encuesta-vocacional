@@ -119,9 +119,11 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
                 }
             }
         },
-        rotation: 0.8 * Math.PI,
+        /*rotation: 0.8 * Math.PI,
         circumference: 1.4 * Math.PI,
-        cutoutPercentage: 85
+        cutoutPercentage: 85*/
+        rotation: 0.5 * Math.PI,
+        cutoutPercentage: 65
     };
     var changeColor = function(chart){
         var ctx = chart.chart.ctx;

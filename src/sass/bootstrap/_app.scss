@@ -149,7 +149,6 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
 .contenido-intro {
     @include columnas-intro();
 }
-.contenido,
 .contenido-intro {
     position: relative;
     &.ng-enter {
@@ -166,6 +165,9 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             @include ancho-desp(right);
         }
     }
+}
+.contenido,
+.contenido-intro {
     .formulario {
         .placeholder-option {
             display: none;
@@ -202,9 +204,13 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             .form-group {
                 color: #333;
                 background-color: #fff;
-                padding: $font-size-base;
+                padding: $font-size-base $font-size-base ($font-size-base * 3) $font-size-base;
                 margin-top: $form-group-margin-bottom;
                 box-shadow: 0 0 4px #ccc;
+                .contiene-slider {
+                    width: 90%;
+                    margin-left: 5%;
+                }
             }
         }
         .nav-botones-inf {
@@ -212,6 +218,9 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             div {
                 padding-left: 6px;
                 padding-right: 0;
+            }
+            .btn {
+                text-transform: uppercase;
             }
         }
     }
@@ -226,8 +235,17 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
         }
     }
     .avance-lineal {
+        color: #333;
+        background-color: #fff;
+        padding: 10px;
+        margin: 15px -15px;
+        box-shadow: 0 0 4px #ccc;
+        p {
+            margin: 0 0 5px;
+        }
         .progress {
             margin: 0;
+            border-radius: 11px;
             .progress-bar {
                 min-width: 2em;
                 background-image: linear-gradient(to right, rgba(255,0,0,1), rgba(255,128,0,1), rgba(255,0,0,1));
@@ -241,14 +259,16 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
     .avance {
         color: #333;
         background-color: #fff;
-        padding: $font-size-base;
+        //padding: $font-size-base;
         margin-top: $form-group-margin-bottom;
         box-shadow: 0 0 4px #ccc;
+        @include dim-cuadrada(3,1,false);
         .grafico {
+            @include dim-cuadrada(3,1.5,true);
             position: relative;
             .porcentaje {
                     position: absolute;
-                    top: 50%;
+                    top: 30%;
                     left: 50%;
                     text-align: center;
                     margin-left: -2em;
@@ -329,7 +349,7 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
     @media (min-width: $screen-xs-min) {
         position: absolute;
         .navegacion {
-            width: 13.5%; // ------------------------> Valor que determina el ancho de la barra de botones
+            width: 17%; //13.5%; // ------------------------> Valor que determina el ancho de la barra de botones
             top: $height-header;
             height: 1080px;
             background-color: $nav-bg;
@@ -382,7 +402,7 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
                     bottom: 0;
                 }
                 &.activo {
-                    bottom: $alto-bar-nivel2nav;
+                    bottom: 0;//$alto-bar-nivel2nav;
                 }
                 &.activo-remove {
                     bottom: 0;

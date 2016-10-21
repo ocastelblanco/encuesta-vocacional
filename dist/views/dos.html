@@ -2,7 +2,9 @@
     <div class="formulario-test">
         <div class="form-group" ng-repeat="pregunta in p2.preguntas track by $index">
             <label for="{{bloque+($index+1)}}">{{pregunta}}</label>
-            <rzslider id="{{bloque+($index+1)}}" rz-slider-model="cont.datos[bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
+            <div class="contiene-slider">
+                <rzslider id="{{bloque+($index+1)}}" rz-slider-model="cont.datos[bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
+            </div>
         </div>
         <div class="row nav-botones-inf">
             <div class="col-sm-4">&nbsp;</div>

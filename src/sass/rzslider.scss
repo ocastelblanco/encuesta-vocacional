@@ -2,6 +2,14 @@
  (c) Rafal Zajac <rzajac@gmail.com>, Valentin Hervieu <valentin@hervieu.me>, Jussi Saarivirta <jusasi@gmail.com>, Angelin Sirbu <angelin.sirbu@gmail.com> - 
  https://github.com/angular-slider/angularjs-slider - 
  2016-08-07 */
+ /* Modificaciones: Oliver Castelblanco 2016-10-22 */
+$screen-xs-min:              480px !default;
+$screen-sm-min:              768px !default;
+$screen-md-min:              992px !default;
+$screen-lg-min:              1200px !default;
+$screen-xs-max:              ($screen-sm-min - 1) !default;
+$screen-sm-max:              ($screen-md-min - 1) !default;
+$screen-md-max:              ($screen-lg-min - 1) !default;
 .rzslider {
   position: relative;
   display: inline-block;
@@ -55,14 +63,15 @@
 }
 
 .rzslider .rz-bar {
-  left: 0;
+  left: 2px;
+  top: 12.5px;
   z-index: 1;
-  width: 100%;
-  height: 4px;
-  background: #d8e0f3;
-  -webkit-border-radius: 2px;
-     -moz-border-radius: 2px;
-          border-radius: 2px;
+  width: 98%;
+  height: 10px;
+  background: #e7eaed;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+          border-radius: 5px;
 }
 
 .rzslider .rz-bar.rz-selection {
@@ -79,7 +88,8 @@
   width: 32px;
   height: 32px;
   cursor: pointer;
-  background-color: #0db9f0;
+  background-color: #e06528;
+  background: linear-gradient(45deg, #e06528, #e8b080);
   -webkit-border-radius: 16px;
      -moz-border-radius: 16px;
           border-radius: 16px;
@@ -87,14 +97,15 @@
 
 .rzslider .rz-pointer:after {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 8px;
-  height: 8px;
-  background: #ffffff;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
+  top: 6px;
+  left: 6px;
+  width: 20px;
+  height: 20px;
+  background-color: #e7e7e7;
+  background: linear-gradient(45deg, #e7e7e7, #efefef);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
   content: '';
 }
 
@@ -149,8 +160,19 @@
   height: 10px;
   text-align: center;
   cursor: pointer;
-  background: #d8e0f3;
+  background: #e7eaed;
   border-radius: 50%;
+}
+.rzslider .rz-ticks .rz-tick:after {
+  content: '';
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  border-radius: 50%;
+  background: #e7eaed;
+  margin-left: -14px;
+  margin-top: -9px;
+  cursor: pointer;
 }
 
 .rzslider .rz-ticks .rz-tick.rz-selected {
@@ -161,15 +183,30 @@
   position: absolute;
   top: -30px;
   transform: translate(-50%, 0);
-  display: none; // Nuevo
+  display: none;
 }
+
 .rzslider .rz-ticks .rz-tick .rz-tick-legend {
   position: absolute;
-  //top: 24px;
-  top: -24px;
-  //max-width: 50px;
+  top: 24px;
   white-space: normal;
   transform: translate(-50%, 0);
+  @media (max-width: $screen-xs-max) {
+    max-width: 50px;
+    font-size: 12px;
+  }
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    max-width: 90px;
+    font-size: 12px;
+  }
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    max-width: 120px;
+    font-size: 14px;
+  }
+  @media (min-width: $screen-lg-min) {
+    max-width: 150px;
+    font-size: 14px;
+  }
 }
 
 .rzslider .rz-ticks.rz-ticks-values-under .rz-tick-value {

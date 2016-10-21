@@ -2,18 +2,20 @@
     <div class="formulario-test">
         <div class="form-group" ng-repeat="pregunta in p5.preguntas track by $index">
             <label for="{{bloque+($index+1)}}">{{pregunta}}</label>
-            <rzslider id="{{bloque+($index+1)}}" rz-slider-model="cont.datos[bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
+            <div class="contiene-slider">
+                <rzslider id="{{bloque+($index+1)}}" rz-slider-model="cont.datos[bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
+            </div>
         </div>
         <div class="row nav-botones-inf">
             <div class="col-sm-4">&nbsp;</div>
             <div class="col-sm-4">
-                <button class="btn btn-default btn-block" ng-click="cont.avanzar(4)">
+                <button class="btn btn-primary btn-block" ng-click="cont.avanzar(4)">
                     Volver
                 </button>
             </div>
             <div class="col-sm-4">
                 <button class="btn btn-primary btn-block" ng-click="cont.avanzar(6)" ng-disabled="cont.validar(bloque)">
-                    Registrar respuestas y continuar
+                    Continuar
                 </button>
             </div>
         </div>

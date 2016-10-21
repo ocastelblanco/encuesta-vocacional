@@ -88,3 +88,22 @@
     }
   }
 }
+@mixin dim-cuadrada($num-col, $factor, $cuad) {
+  $k: ($grid-columns / $num-col);
+  $m: (($factor - 1) / 2);
+  @each $screen, $container in  ($screen-sm-min,$container-sm),
+                                ($screen-md-min,$container-md),
+                                ($screen-lg-min, $container-lg){
+      @media (min-width: #{$screen}) {
+          $long: #{(($container / $k) - $grid-gutter-width) * $factor};
+          $margen: #{floor(-(($container / $k) - $grid-gutter-width) * $m)};
+          $padding: #{((($container / $k) - $grid-gutter-width) * $m) / 2};
+          height: $long;
+          @if $cuad {
+              width: $long;
+              margin-left: $margen;
+              padding-top: $padding;
+          }
+      }
+  }
+}
