@@ -3,12 +3,12 @@ var app = angular.module('app', [
     'ngRoute',
     'ngTouch',
     'ngAnimate',
+    'ngSanitize',
     'ui.bootstrap',
     'chart.js',
     'rzModule'
 ]);
 var tiposDocumentos = [
-    //{'num':'','doc':'Tipo de Documento'},
     {'num':'1','doc':'Cédula de Ciudadanía'},
     {'num':'2','doc':'Tarjeta de Identidad'},
     {'num':'3','doc':'Cédula de Extranjería'},
@@ -30,7 +30,7 @@ var graficoData;
 app.controller('main', [function(){
     console.log('main');
 }]);
-app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$scope', function(datos, $rootScope, $uibModal, $timeout, $scope){
+app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$scope', 'json', function(datos, $rootScope, $uibModal, $timeout, $scope, json){
     console.log('contenedor');
     var rutasCont = {
         '/': 'uno',
@@ -56,6 +56,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     yo.nav = 'views/nav.html';
     yo.encuesta = 'views/dos.html';
     yo.resultados = 'views/siete.html';
+    yo.imgFondo = 'views/img-fondo.html';
     yo.alertas = {
         'guardando': {
             'visible': false,
@@ -141,6 +142,10 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
         }
     });
     yo.coloresAvance = ['#F7464A','#DCDCDC'];
+    var retro;
+    json('realimentacion').then(function(resp){
+        retro = resp;
+    });
      // ---------------------------------------------------------------> Activar guardarDatos() en producción
     yo.avanzar = function(destino) {
         yo.pag = destino;
@@ -159,6 +164,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
             if (tendencia < (valor+int[llave])) {
                 tendencia = (valor+int[llave]);
                 yo.tendencia = tiposLabels[llave][0]+'-'+tiposLabels[llave][1];
+                yo.realimentacion = retro[llave];
             }
         });
         switch (destino) {
@@ -355,7 +361,7 @@ function prepararGraficos() {
     });
 	paper = graficos[0];
 	var ancho = paper.view.size.width;
-	var alto = ancho + (ancho * 0.1) + 24;
+	var alto = ancho + (ancho * 0.1) + 38;
 	paper.view.viewSize.height = alto;
 	var colorGraficos = [{
 	        'baseBack': new paper.Color(1,0.4,0,0.15),
@@ -371,8 +377,10 @@ function prepararGraficos() {
 	angular.forEach(graficos, function(valor, llave) {
         paper = valor;
 	    paper.view.viewSize.height = alto;
+	    /* ------------> Dibuja fondos de graphs para reviews
         var fondo = paper.Path.Rectangle(new paper.Point(0,0),new paper.Point(ancho,alto));
         fondo.fillColor = new paper.Color(0,0,0,0.25);
+        */
         var porcentaje = dataGraficos[llave] / totalValores;
         var color;
         if (dataGraficos[llave] == Math.max.apply(Math, dataGraficos)) {
@@ -421,10 +429,10 @@ function dibujarGrafico(paper, ancho, porcentaje, titulo, color) {
             var linea = new paper.Path.Line(centro, new paper.Point(x,ancho * 1.05));
             linea.strokeColor = new paper.Color(1,1,1,1);
             linea.strokeWidth = 2;
-            var texto = new paper.PointText(new paper.Point(x,(ancho * 1.1)));
+            var texto = new paper.PointText(new paper.Point(x,(ancho * 1.15)));
             texto.content = titulo[0]+'\n'+titulo[1];
             texto.fillColor = 'white';
-            texto.fontSize = '12px';
+            texto.fontSize = '16px';
             texto.justification = 'center';
         }
 	};

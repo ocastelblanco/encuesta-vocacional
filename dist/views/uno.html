@@ -5,55 +5,55 @@
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.nombres}">
             <!--label for="nombres">Nombres</label-->
             <input type="text" class="form-control" id="nombres" placeholder="Nombres" ng-model="cont.datos.nombres">
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.nombres"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.nombres"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.apellidos}">
             <!--label for="apellidos">Apellidos</label-->
             <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" ng-model="cont.datos.apellidos">
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.apellidos"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.apellidos"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.tipo}">
             <!--label for="tipo">Tipo de documento</label-->
             <select id="tipo" class="form-control" ng-class="{'no-activo': !cont.datos.tipo}" ng-model="cont.datos.tipo" ng-options="valor.num as valor.doc for (key,valor) in p1.tipos" ng-change="p1.cambiaTipo()">
                 <option class="placeholder-option" value="">Tipo de documento</option>
             </select>
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.tipo"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.tipo"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.documento}">
             <!--label for="documento">Número de documento</label-->
             <input type="text" class="form-control" id="documento" placeholder="{{p1.placeDoc}}" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)" ng-change="cont.limpiaNumDocumento()" ng-disabled="!cont.datos.tipo">
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.documento"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.documento"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success':cont.datos.email}">
             <!--label for="email">Correo electrónico</label-->
             <input type="email" class="form-control" id="email" placeholder="Correo electrónico" ng-model="cont.datos.email" ng-blur="cont.verificaCampo('email',cont.datos.email)">
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.email"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.email"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.celular}">
             <!--label for="celular">Número celular</label-->
             <input type="number" class="form-control" id="celular" placeholder="Número celular" ng-model="cont.datos.celular">
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.celular"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.celular"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.departamento}">
             <!--label for="departamento">Departamento</label-->
             <select id="departamento" class="form-control" ng-class="{'no-activo': !cont.datos.departamento}" ng-model="cont.datos.departamento" ng-options="depto as depto for (depto,valor) in p1.municipios" ng-change="p1.cambiaDepto(cont.datos.departamento);">
                 <option class="placeholder-option" value="">Departamento</option>
             </select>
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.departamento"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.departamento"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.ciudad}">
             <!--label for="ciudad">Municipio</label-->
             <select id="ciudad" class="form-control" ng-class="{'no-activo': !cont.datos.ciudad}" ng-model="cont.datos.ciudad" ng-options="ciudad as ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento">
                 <option class="placeholder-option" value="">{{p1.placeMun}}</option>
             </select>
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.ciudad"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.ciudad"></i>
         </div>
         <div class="checkbox form-group has-feedback" ng-class="{'has-success': cont.terminos}">
             <label>
                 <input type="checkbox" value="" ng-model="cont.terminos">
                 Acepto los <a href="terminos.pdf">términos y condiciones</a>
             </label>
-            <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.terminos"></i>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.terminos"></i>
         </div>
         <button class="btn btn-primary btn-block boton-avanzar" ng-click="cont.avanzar(2)" ng-disabled="cont.validar('Datos')">
             Conocer mi camino

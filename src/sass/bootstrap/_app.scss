@@ -6,22 +6,6 @@ body {
         cursor: pointer;
     }
 }
-canvas#grafico0,
-canvas#grafico1,
-canvas#grafico2,
-canvas#grafico3 {
-    width: 100%;
-}
-.grafico-resultados {
-    @media (min-width: $screen-xs-min) {
-        .dos-graficos:first-of-type {
-            padding-right: 0;
-        }
-        .dos-graficos:last-of-type {
-            padding-left: 0;
-        }
-    }
-}
 @include keyframes(fade-out) {
     33%{
         opacity: 1;
@@ -37,6 +21,7 @@ canvas#grafico3 {
     left: 0;
     padding: 0;
     top: 0;
+    z-index: -999;
     filter: url('#blur');
     filter: blur(5px);
     -webkit-filter: blur(5px);
@@ -145,11 +130,10 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
 }
 .intro {
     margin-top: $line-height-computed;
+    line-height: 1.5;
 }
 .contenido-intro {
     @include columnas-intro();
-}
-.contenido-intro {
     position: relative;
     &.ng-enter {
         transition: 0.75s ease-out all;
@@ -165,9 +149,6 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             @include ancho-desp(right);
         }
     }
-}
-.contenido,
-.contenido-intro {
     .formulario {
         .placeholder-option {
             display: none;
@@ -177,6 +158,13 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             text-transform: uppercase;
             font-family: $font-family-condensed;
             font-weight: bold;
+            &:hover {
+                background-color: #c4f03e;
+            }
+            &[disabled] {
+                background-color: #afc275;
+                opacity: 1;
+            }
         }
         .checkbox {
             text-transform: uppercase;
@@ -196,6 +184,8 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             color: $placeholder-color;
         }
     }
+}
+.contenido {
     .test {
         padding-bottom: $font-size-base;
         margin-left: -$font-size-base;
@@ -221,6 +211,72 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             }
             .btn {
                 text-transform: uppercase;
+            }
+        }
+    }
+}
+.contenido-resultados {
+    .perfil {
+        background-color: #eee;
+        background: rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.5);
+        margin-top: 30px;
+        padding: 35px;
+        display: table;
+        width: 100%;
+        .img-perfil {
+            width: 75px;
+            display: table-cell;
+            vertical-align: middle;
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        .texto-perfil {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0 0 0 30px;
+            small {
+                color: #d8691e;
+                font-weight: bold;
+                font-size: $font-size-large;
+            }
+        }
+    }
+    canvas#grafico0,
+    canvas#grafico1,
+    canvas#grafico2,
+    canvas#grafico3 {
+        width: 100%;
+    }
+    .grafico-resultados {
+        background-color: #eee;
+        background: rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.5);
+        margin: 30px 0;
+        padding: 35px;
+        @media (min-width: $screen-xs-min) {
+            .dos-graficos:first-of-type {
+                padding-right: 0;
+            }
+            .dos-graficos:last-of-type {
+                padding-left: 0;
+            }
+        }
+        .dos-graficos {
+            .cont-grafico {
+                padding: $grid-gutter-width;
+            }
+        }
+        .graf-final {
+            .cont-grafico {
+                padding-right: 15px;
+            }
+        }
+        .realimentacion {
+            h4 {
+                color: #d8691e;
             }
         }
     }
@@ -335,7 +391,6 @@ $top-alerta: $navbar-margin-bottom * 1.95;
     }
 }
 $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse desde esta variable
-
 .cont-navegacion {
     .navegacion {
         position: fixed; // -------------------------> Todo es fixed

@@ -25,7 +25,7 @@
 @mixin button-menu($color, $background, $background-activo) {
     color: $color;
     background-color: $background;
-    border-width: 0 0 0 1px;
+    border-width: 0 0 0 0;
     border-radius: 0;
     padding: 20px 0;
     font-family: $font-family-condensed;
@@ -33,7 +33,7 @@
     &.focus,
     &:hover {
         color: $color;
-        background-color: $background;
+        background-color: #4d505b;//$background;
         border-color: $color;
     }
     &:active,
@@ -48,6 +48,10 @@
             background-color: $background-activo;
             border-color: $color;
         }
+        &.disabled,
+        &[disabled] {
+            background-color: $background-activo;
+        }
     }
     &:active,
     &.active,
@@ -57,11 +61,12 @@
     &.disabled,
     &[disabled],
     fieldset[disabled] & {
+        background-color: #3e4047;
         &:hover,
         &:focus,
         &.focus {
-            background-color: $background-activo;
-            border-color: $color;
+            /*background-color: #3e4047;//$background-activo;
+            border-color: $color;*/
         }
     }
     .badge {
