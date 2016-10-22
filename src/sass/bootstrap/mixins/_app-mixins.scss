@@ -93,7 +93,7 @@
     }
   }
 }
-@mixin dim-cuadrada($num-col, $factor, $cuad) {
+@mixin dim-cuadrada($num-col, $factor, $cuad, $inner) {
   $k: ($grid-columns / $num-col);
   $m: (($factor - 1) / 2);
   @each $screen, $container in  ($screen-sm-min,$container-sm),
@@ -106,6 +106,8 @@
           height: $long;
           @if $cuad {
               width: $long;
+          }
+          @if $inner {
               margin-left: $margen;
               padding-top: $padding;
           }

@@ -150,7 +150,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     yo.avanzar = function(destino) {
         yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
-        //guardarDatos();
+        guardarDatos();
         var numP = destino - 3;
         if (destino > 2) {
             for (var i=0;i<per.length;i++) {
@@ -344,12 +344,12 @@ app.controller('paso7', ['$window', function($window){
     yo.labels = tiposLabels;
     yo.series = ['Personalidad', 'Interés'];
     yo.modalidades = tiposModalidades;
-    prepararGraficos();
+    prepararGraficos($window.innerHeight);
     angular.element($window).bind('resize', function(){
-        prepararGraficos();
+        prepararGraficos($window.innerHeight);
     });
 }]);
-function prepararGraficos() {
+function prepararGraficos(innerH) {
     var graficos = [];
     var totalValores = 0;
     var dataGraficos = [];
@@ -388,10 +388,10 @@ function prepararGraficos() {
         } else {
             color = colorGraficos[1];
         }
-        dibujarGrafico(paper, ancho, porcentaje, tiposLabels[llave], color);
+        dibujarGrafico(paper, ancho, porcentaje, tiposLabels[llave], color, innerH);
     });
 }
-function dibujarGrafico(paper, ancho, porcentaje, titulo, color) {
+function dibujarGrafico(paper, ancho, porcentaje, titulo, color, innerH) {
     var radioBack = ancho / 2;
     var radioFront = radioBack * 0.8;
     var x = ancho / 2;
@@ -429,10 +429,14 @@ function dibujarGrafico(paper, ancho, porcentaje, titulo, color) {
             var linea = new paper.Path.Line(centro, new paper.Point(x,ancho * 1.05));
             linea.strokeColor = new paper.Color(1,1,1,1);
             linea.strokeWidth = 2;
-            var texto = new paper.PointText(new paper.Point(x,(ancho * 1.15)));
+            var texto = new paper.PointText(new paper.Point(x,(ancho * 1.175)));
             texto.content = titulo[0]+'\n'+titulo[1];
             texto.fillColor = 'white';
-            texto.fontSize = '16px';
+            if (innerH < 768) {
+                texto.fontSize = '14px';
+            } else {
+                texto.fontSize = '16px';
+            }
             texto.justification = 'center';
         }
 	};

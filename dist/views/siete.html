@@ -30,10 +30,23 @@
             <ng-bind-html ng-bind-html="cont.realimentacion"></ng-bind-html>
         </div>
     </div>
-    <div class="panel form-group has-feedback" ng-class="{'has-success': cont.datos.modalidad}">
-        <label for="modalidad">¿En qué modalidad te gustaría hacer tu carrera?</label>
-        <select id="modalidad" class="form-control" ng-model="cont.datos.modalidad" ng-options="valor.num as valor.tipo for (key,valor) in p7.modalidades" ng-change="cont.grabarDatos()">
-        </select>
-        <i class="fa fa-check fa-2x form-control-feedback" ng-show="cont.datos.modalidad"></i>
+    <div class="encuesta-final">
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.modalidad}">
+            <div class="col-sm-7">
+                <label for="modalidad">Si necesitas apoyo en tu camino a la U cuéntanos en qué modalidad te gustaría estudiar</label>
+            </div>
+            <div class="col-sm-5">
+                <select id="modalidad" class="form-control" ng-model="cont.datos.modalidad" ng-options="valor.num as valor.tipo for (key,valor) in p7.modalidades">
+                    <option class="placeholder-option" value="">Escoge una modalidad</option>
+                </select>
+                <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.modalidad"></i>
+            </div>
+        </div>
+        <div class="col-sm-7 hidden-xs">&nbsp;</div>
+        <div class="col-sm-5">
+            <button class="btn btn-primary btn-block boton-avanzar" ng-click="cont.grabarDatos()" ng-disabled="!cont.datos.modalidad">
+                Enviar
+            </button>
+        </div>
     </div>
 </div>

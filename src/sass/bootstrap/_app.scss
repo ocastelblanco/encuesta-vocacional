@@ -1,7 +1,7 @@
 // Estilos
 body {
     padding-top: $height-header;
-    padding-bottom: $height-footer; //-------> activado mientras el footer es fixed
+    padding-bottom: ($height-footer * 1.5); //-------> activado mientras el footer es fixed
     a {
         cursor: pointer;
     }
@@ -280,9 +280,42 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             }
         }
     }
+    .encuesta-final {
+        .placeholder-option {
+            display: none;
+            color: #ccc;
+        }
+        .boton-avanzar {
+            @media (max-width: $screen-xs-max) {
+                margin-top: 4px;
+            }
+            @media (min-width: $screen-xs-min) {
+                margin-top: $font-size-large;
+            }
+            text-transform: uppercase;
+            font-family: $font-family-condensed;
+            font-weight: bold;
+            &:hover {
+                background-color: #c4f03e;
+            }
+            &[disabled] {
+                background-color: #afc275;
+                opacity: 1;
+            }
+        }
+        ::-webkit-input-placeholder,
+        :-ms-input-placeholder,
+        ::-moz-placeholder,
+        :-moz-placeholder {
+            color: $placeholder-color;
+        }
+        .form-control-feedback {
+            right: 15px;
+        }
+    }
 }
 .cont-avance {
-    // position: fixed; // ------------------------> Pendiente de determinar si queda fixed para desktop
+    position: fixed; // ------------------------> Pendiente de determinar si queda fixed para desktop
     &.ng-enter {
         transition: 0.75s ease-out all;
         @include ancho-desp(left);
@@ -318,9 +351,9 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
         //padding: $font-size-base;
         margin-top: $form-group-margin-bottom;
         box-shadow: 0 0 4px #ccc;
-        @include dim-cuadrada(3,1,false);
+        @include dim-cuadrada(3,1,true,false);
         .grafico {
-            @include dim-cuadrada(3,1.5,true);
+            @include dim-cuadrada(3,1.5,true,true);
             position: relative;
             .porcentaje {
                     position: absolute;
@@ -355,7 +388,7 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
         }
     }
 }
-$top-alerta: $navbar-margin-bottom * 1.95;
+$top-alerta: $height-header;//$navbar-margin-bottom * 1.95;
 .alerta-sup {
     position: fixed;
     text-align: center;
