@@ -32,21 +32,21 @@
     &:focus,
     &.focus,
     &:hover {
-        color: $color;
+        color: #fff;
         background-color: #4d505b;//$background;
         border-color: $color;
     }
     &:active,
     &.active  {
-        color: $color;
+        color: #fff;
         background-color: $background-activo;
         border-color: transparent;
         &:hover,
         &:focus,
         &.focus {
-            color: $color;
+            color: #fff;
             background-color: $background-activo;
-            border-color: $color;
+            border-color: transparent;
         }
         &.disabled,
         &[disabled] {
@@ -61,7 +61,7 @@
     &.disabled,
     &[disabled],
     fieldset[disabled] & {
-        background-color: #3e4047;
+        background-color: #fff;//#3e4047;
         &:hover,
         &:focus,
         &.focus {
@@ -113,4 +113,19 @@
           }
       }
   }
+}
+@mixin icono-boton-menu($activo) {
+    @each $boton in a,b,c,d,e {
+        &.icono-bloque-#{$boton} {
+            @if $activo {
+                background-image: url(../img/icono-bloque-#{$boton}_hover.png);
+            }
+            @else {
+                background-image: url(../img/icono-bloque-#{$boton}.png);
+            }
+            &:hover {
+                background-image: url(../img/icono-bloque-#{$boton}_hover.png);
+            }
+        }
+    }
 }

@@ -89,7 +89,7 @@ admin.controller('adminGeneral', ['i18nService','sesion', 'datos', '$rootScope',
                 for (var i=1;i<5;i++) {
                     resp[llave]['perfil'+i] = 0;
                     for (var l=0;l<bloques.length;l++) {
-                        resp[llave]['perfil'+i] = Number(resp[llave]['perfil'+i]) + Number(resp[llave][bloques[l]+i]) + Number(resp[llave][bloques[l]+(i+4)]);
+                        resp[llave]['perfil'+i] = Number(resp[llave]['perfil'+i]) + Number(resp[llave][bloques[l]+i]);// + Number(resp[llave][bloques[l]+(i+4)]);
                     }
                 }
             });

@@ -14,8 +14,10 @@
     <div class="nav2nivel" ng-class="{'activo': cont.pag > 1 && cont.pag < 7}">
         <div class="col-xs-2-5 col-sm-12" ng-repeat="boton in cont.navegacion track by $index">
             <button class="btn btn-menu btn-block" ng-click="cont.avanzar(boton.pag)" ng-disabled="cont.validar(boton.bloque)" ng-class="{'active': cont.pag == ($index+2)}">
-                <img ng-src="assets/img/{{boton.icono}}.png">
-                <span class="hidden-sm hidden-xs">{{boton.destino}}</span>
+                <div class="btn-cont">
+                    <div class="icono-nav {{boton.icono}}"></div>
+                    <span class="hidden-sm hidden-xs">{{boton.destino}}</span>
+                </div>
             </button>
         </div>
     </div><!-- /.nav2nivel -->

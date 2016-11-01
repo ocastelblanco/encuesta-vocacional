@@ -309,6 +309,8 @@ app.controller('paso2', ['json', function(json){
     json('preguntas').then(function(resp){
         yo.preguntas = resp[0];
     });
+    yo.bloque = 'A';
+    yo.pag = 2;
 }]);
 app.controller('paso3', ['json', function(json){
     console.log('paso3');
@@ -316,6 +318,8 @@ app.controller('paso3', ['json', function(json){
     json('preguntas').then(function(resp){
         yo.preguntas = resp[1];
     });
+    yo.bloque = 'B';
+    yo.pag = 3;
 }]);
 app.controller('paso4', ['json', function(json){
     console.log('paso4');
@@ -323,6 +327,8 @@ app.controller('paso4', ['json', function(json){
     json('preguntas').then(function(resp){
         yo.preguntas = resp[2];
     });
+    yo.bloque = 'C';
+    yo.pag = 4;
 }]);
 app.controller('paso5', ['json', function(json){
     console.log('paso5');
@@ -330,6 +336,8 @@ app.controller('paso5', ['json', function(json){
     json('preguntas').then(function(resp){
         yo.preguntas = resp[3];
     });
+    yo.bloque = 'D';
+    yo.pag = 5;
 }]);
 app.controller('paso6', ['json', function(json){
     console.log('paso6');
@@ -337,6 +345,8 @@ app.controller('paso6', ['json', function(json){
     json('preguntas').then(function(resp){
         yo.preguntas = resp[4];
     });
+    yo.bloque = 'E';
+    yo.pag = 6;
 }]);
 app.controller('paso7', ['$window', function($window){
     console.log('paso7');
@@ -357,7 +367,8 @@ function prepararGraficos(innerH) {
         graficos[llave] = new paper.PaperScope();
         graficos[llave].setup('grafico'+llave);
         totalValores += valor + graficoData[1][llave];
-        dataGraficos.push(valor + graficoData[1][llave]);
+        // Se suma un porcentaje adicional para evitar empates
+        dataGraficos.push(valor + graficoData[1][llave] + ((5 - llave) / 10));
     });
 	paper = graficos[0];
 	var ancho = paper.view.size.width;

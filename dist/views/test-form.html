@@ -1,0 +1,33 @@
+<div class="formulario-test">
+    <div class="form-group" ng-repeat="pregunta in paso.preguntas track by $index">
+        <label for="{{paso.bloque+($index+1)}}">{{pregunta}}</label>
+        <div class="contiene-slider">
+            <rzslider id="{{paso.bloque+($index+1)}}" rz-slider-model="cont.datos[paso.bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
+        </div>
+    </div>
+    <div class="row nav-botones-inf hidden-xs" ng-if="paso.pag < 6">
+        <div class="col-sm-4">&nbsp;</div>
+        <div class="col-sm-4">
+            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(paso.pag-1)">
+                Volver
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(paso.pag+1)" ng-disabled="cont.validar(paso.bloque)">
+                Continuar
+            </button>
+        </div>
+    </div>
+    <div class="row nav-botones-inf" ng-if="paso.pag == 6">
+        <div class="col-sm-4 hidden-xs">
+            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(paso.pag-1)">
+                Volver
+            </button>
+        </div>
+        <div class="col-sm-8">
+            <button class="btn btn-primary btn-block" ng-click="cont.avanzar(paso.pag+1)" ng-disabled="cont.validar(paso.bloque)">
+                Conoce tu resultado
+            </button>
+        </div>
+    </div>
+</div>
