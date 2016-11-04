@@ -1,7 +1,7 @@
 <?php
 require_once('medoo.php');
 require_once('inc.php');
-$database = new medoo([
+$database = new medoo(array(
 	'database_type' => 'mysql',
 	'database_name' => $DB,
 	'server' => $SERVIDOR,
@@ -9,10 +9,10 @@ $database = new medoo([
 	'password' => $CLAVE,
 	'charset' => 'utf8',
 	'port' => 3306
-]);
+));
 $id = "".$_GET['id'];
 if ($id){
-    $numFilas = $database->delete($TABLA,['id'=>$id]);
+    $numFilas = $database->delete($TABLA,array('id'=>$id));
 }
-echo json_encode(['filas_afectadas'=>$numFilas], JSON_UNESCAPED_UNICODE);
+echo json_encode(['filas_afectadas'=>$numFilas], 256);
 ?>

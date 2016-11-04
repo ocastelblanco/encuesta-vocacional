@@ -1,0 +1,18 @@
+<div class="alert alert-info" role="alert">
+    <h4>Paso 3 de {{mn.numPasos}} <small>Crear archivo de configuración</small></h4>
+    <p>A continuación el sistema intentará crear el archivo de configuración con los datos proporcionados anteriormente.</p>
+</div>
+<div class="alert" ng-class="mn.claseAlerta" role="alert" ng-bind-html="mn.creaConfig"></div>
+<div ng-class="mn.claseAdicional" ng-bind-html="mn.infoAdicional"></div>
+<div ng-if="mn.avanzar">
+    <p>Haga clic en el siguiente botón para continuar con la configuración.</p>
+    <button class="btn btn-primary btn-block" ng-click="mn.acciones.paso3()">
+        Continuar <i class="fa fa-chevron-right"></i>
+    </button>
+</div>
+<div ng-if="mn.reintentar">
+    <p>Haga clic en el siguiente botón para sobreescribir la configuración existente. Si no desea cambiar la configuración existente, cierre esta ventana.</p>
+    <button class="btn btn-warning btn-block" ng-click="mn.acciones.paso21()">
+        Reescribir archivo de configuración
+    </button>
+</div>

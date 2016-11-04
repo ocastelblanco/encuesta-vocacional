@@ -1,0 +1,12 @@
+<div class="alert alert-info" role="alert">
+    <h4>Paso 4 de {{mn.numPasos}} <small>Crear tabla de datos</small></h4>
+    <p>A continuación el sistema intentará crear la tabla para almacenar los datos en la base de datos, con los datos proporcionados.</p>
+</div>
+<div class="alert" ng-class="mn.claseAlerta" role="alert" ng-bind-html="mn.creaConfig"></div>
+<div ng-class="mn.claseAdicional" ng-bind-html="mn.infoAdicional"></div>
+<div ng-if="mn.avanzar">
+    <p ng-bind-html="mn.creaTablaTex"></p>
+    <button class="btn btn-primary btn-block" ng-click="mn.acciones.paso4(mn.prueba)">
+        {{mn.creaTablaBtn}}
+    </button>
+</div>

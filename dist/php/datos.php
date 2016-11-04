@@ -1,7 +1,7 @@
 <?php
 require_once('medoo.php');
 require_once('inc.php');
-$database = new medoo([
+$database = new medoo(array(
 	'database_type' => 'mysql',
 	'database_name' => $DB,
 	'server' => $SERVIDOR,
@@ -9,7 +9,7 @@ $database = new medoo([
 	'password' => $CLAVE,
 	'charset' => 'utf8',
 	'port' => 3306
-]);
+));
 $data = $database->select($TABLA, "*");
-echo json_encode($data, JSON_UNESCAPED_UNICODE);
+echo json_encode($data, 256);
 ?>

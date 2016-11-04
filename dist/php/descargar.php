@@ -15,7 +15,7 @@ $objPHPExcel->getProperties()->setCreator("Oliver Castelblanco")
 							 ->setDescription("Tabla de datos - Encuesta vocacional Politécnico Grancolombiano")
 							 ->setKeywords("office 2007 openxml php vocacinal")
 							 ->setCategory("Tabla datos");
-$database = new medoo([
+$database = new medoo(array(
 	'database_type' => 'mysql',
 	'database_name' => $DB,
 	'server' => $SERVIDOR,
@@ -23,10 +23,10 @@ $database = new medoo([
 	'password' => $CLAVE,
 	'charset' => 'utf8',
 	'port' => 3306
-]);
+));
 $data = $database->select($TABLA, "*");
-$letraCeldas = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ"];
-$valoresPreguntas = ["","Nunca","Casi nunca","Casi siempre","Siempre"];
+$letraCeldas = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ");
+$valoresPreguntas = array("","Nunca","Casi nunca","Casi siempre","Siempre");
 for ($i=0;$i<count($titulos);$i++) {
     $celda = $letraCeldas[$i]."1";
     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $titulos[$i]);

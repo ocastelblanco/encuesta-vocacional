@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="config">
+    <head>
+        <title>Configuración</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+        <!-- Llamado a dependencias JS -->
+        <script src="../assets/js/angular.min.js"></script>
+        <script src="../assets/js/angular-sanitize.min.js"></script>
+        <script src="../assets/js/angular-touch.min.js"></script>
+        <script src="../assets/js/angular-animate.min.js"></script>
+        <script src="../assets/js/ui-bootstrap-tpls.min.js"></script>
+    </head>
+    <body>
+        <ng-view ng-controller="main as mn" ng-cloak>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="page-header">
+                            <div class="col-sm-2">
+                                <img src="../assets/img/logo-pg.png" class="img-responsive">
+                            </div>
+                            <h1>Encuesta vocacional <small>Configuración</small></h1>
+                        </div>
+                        <ng-include src="mn.contenido"></ng-include>
+                    </div><!-- /.col-md-8 -->
+                    <div class="col-md-2"></div>
+                </div>
+            </div><!-- /.container -->
+        </ng-view>
+        <!-- Componentes de la app raiz -->
+        <script src="../modules/config-module.min.js"></script>
+    </body>
+</html>
