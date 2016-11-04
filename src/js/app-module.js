@@ -225,7 +225,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     };
     var modalPreCargaDatos = ['$uibModalInstance', '$scope', function($uibModalInstance, $scope){
         $scope.titulo = 'Tus datos ya existen';
-        $scope.cuerpo = 'Tus datos ya están en nuestra base de datos. ¿Deseas cargarlos todos?';
+        $scope.cuerpo = 'Tus datos ya se encuentran registrados en nuestra base de datos ¿deseas continuar con tu test vocacional? En caso de responder NO, tus datos serán borrados y se iniciará un test en blanco.';
         $scope.accion = function(accion){
             $uibModalInstance.close(accion);
         };
