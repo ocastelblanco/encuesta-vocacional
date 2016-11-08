@@ -14,7 +14,7 @@
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.tipo}">
             <!--label for="tipo">Tipo de documento</label-->
-            <select id="tipo" class="form-control" ng-class="{'no-activo': !cont.datos.tipo}" ng-model="cont.datos.tipo" ng-options="valor.num as valor.doc for (key,valor) in p1.tipos" ng-change="p1.cambiaTipo()">
+            <select id="tipo" class="form-control" ng-class="{'no-activo': !cont.datos.tipo, 'select-desplegado': p1.abierto.tipo}" ng-model="cont.datos.tipo" ng-options="valor.num as valor.doc for (key,valor) in p1.tipos" ng-change="p1.cambiaTipo()" ng-click="p1.abierto.tipo=!p1.abierto.tipo" ng-blur="p1.abierto.tipo = p1.cambiaSelect(p1.abierto.tipo,1)" ng-keyup="p1.abierto.tipo = p1.cambiaSelect(p1.abierto.tipo,$event.keyCode)">
                 <option class="placeholder-option" value="">Tipo de documento</option>
             </select>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.tipo"></i>
@@ -36,14 +36,14 @@
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.departamento}">
             <!--label for="departamento">Departamento</label-->
-            <select id="departamento" class="form-control" ng-class="{'no-activo': !cont.datos.departamento}" ng-model="cont.datos.departamento" ng-options="depto as depto for (depto,valor) in p1.municipios" ng-change="p1.cambiaDepto(cont.datos.departamento);">
+            <select id="departamento" class="form-control" ng-class="{'no-activo': !cont.datos.departamento, 'select-desplegado': p1.abierto.departamento}" ng-model="cont.datos.departamento" ng-options="depto as depto for (depto,valor) in p1.municipios" ng-change="p1.cambiaDepto(cont.datos.departamento);" ng-click="p1.abierto.departamento=!p1.abierto.departamento" ng-blur="p1.abierto.departamento = p1.cambiaSelect(p1.abierto.departamento,1)" ng-keyup="p1.abierto.departamento = p1.cambiaSelect(p1.abierto.departamento,$event.keyCode)">
                 <option class="placeholder-option" value="">Departamento</option>
             </select>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.departamento"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.ciudad}">
             <!--label for="ciudad">Municipio</label-->
-            <select id="ciudad" class="form-control" ng-class="{'no-activo': !cont.datos.ciudad}" ng-model="cont.datos.ciudad" ng-options="ciudad as ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento">
+            <select id="ciudad" class="form-control" ng-class="{'no-activo': !cont.datos.ciudad, 'select-desplegado': p1.abierto.ciudad}" ng-model="cont.datos.ciudad" ng-options="ciudad as ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento" ng-click="p1.abierto.ciudad=!p1.abierto.ciudad" ng-blur="p1.abierto.ciudad = p1.cambiaSelect(p1.abierto.ciudad,1)" ng-keyup="p1.abierto.ciudad = p1.cambiaSelect(p1.abierto.ciudad,$event.keyCode)">
                 <option class="placeholder-option" value="">{{p1.placeMun}}</option>
             </select>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.ciudad"></i>
