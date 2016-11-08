@@ -1,5 +1,4 @@
 /* global angular */
-
 var admin = angular.module('admin', [
     'ngTouch',
     'ngAnimate',
@@ -8,7 +7,6 @@ var admin = angular.module('admin', [
     //'ui.grid.selection',
     'ui.grid.pagination'
 ]);
-
 // Controladores
 admin.controller('main', ['sesion', '$rootScope', function(sesion, $rootScope){
     console.log('main');
@@ -31,7 +29,7 @@ admin.controller('adminLogin', ['sesion', '$rootScope', function(sesion, $rootSc
     var salida = this;
     salida.ingreso = function() {
         sesion.md5(salida.user, salida.clave).then(function(resp){
-            if (resp.usuario == '21232f297a57a5a743894a0e4a801fc3' && resp.clave == '055efc165011a33f3a1fcd58872c033b') {
+            if (resp.usuario && resp.clave) {
                 var sess = new Date();
                 sesion.crear(sess.getTime(), salida.user).then(function(resp){
                     if (resp.sesionID) {
