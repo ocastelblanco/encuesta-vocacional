@@ -429,17 +429,18 @@ $top-alerta: $height-header;//$navbar-margin-bottom * 1.95;
     @media (max-width: $screen-xs-max) {
         width: 100%;
         top: $top-alerta * 2;
+        left: 0;
     }
     @media (min-width: $screen-sm-min) {
-        width: $container-sm;
+        width: ($container-sm - 30);
         top: $top-alerta;
     }
     @media (min-width: $screen-md-min) {
-        width: $container-md;
+        width: ($container-md - 30);
         top: $top-alerta;
     }
     @media (min-width: $screen-lg-min) {
-        width: $container-lg;
+        width: ($container-lg - 30);
         top: $top-alerta;
     }
     &.ng-enter {

@@ -20,7 +20,18 @@ module.exports = function(grunt) {
                 }
             },
             src: {
-                files: [{expand: true, cwd: 'src/js', src: '**/*.js', dest: 'dist/modules', ext: '.min.js'}]
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'src/js',
+                        src: ['**/*.js', '!config-module.js'],
+                        dest: 'dist/modules',
+                        ext: '.min.js'
+                    },
+                    {
+                        'dist/config/config-module.min.js': ['src/js/config-module.js']
+                    }
+                ]
             }
         },
         sass: {

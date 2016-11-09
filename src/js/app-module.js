@@ -101,7 +101,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
             if (valor.visible == true) {
                 $timeout(function(){
                     valor.visible = false;
-                },3000);
+                },30000);
             }
         });
     }, true);
@@ -215,7 +215,9 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
                 preCargaDatos = true;
                 var modalInstance = $uibModal.open({
                     templateUrl: 'views/modal.html',
-                    controller: modalPreCargaDatos
+                    controller: modalPreCargaDatos,
+                    keyboard: false,
+                    backdrop: 'static'
                 });
                 modalInstance.result.then(function(accion){
                     if(accion){cargarDatos(resp.id)}
