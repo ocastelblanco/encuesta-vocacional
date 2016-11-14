@@ -2,7 +2,7 @@
 var app = angular.module('app', [
     'ngRoute',
     'ngTouch',
-    'ngAnimate',
+    //'ngAnimate', ------------> Se eliminan las animaciones
     'ngSanitize',
     'ui.bootstrap',
     'chart.js',
@@ -30,7 +30,7 @@ var graficoData;
 app.controller('main', [function(){
     console.log('main');
 }]);
-app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$scope', 'json', function(datos, $rootScope, $uibModal, $timeout, $scope, json){
+app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$scope', 'json', '$window', function(datos, $rootScope, $uibModal, $timeout, $scope, json, $window){
     console.log('contenedor');
     var rutasCont = {
         '/': 'uno',
@@ -101,7 +101,7 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
             if (valor.visible == true) {
                 $timeout(function(){
                     valor.visible = false;
-                },30000);
+                },3000);
             }
         });
     }, true);
@@ -150,6 +150,9 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
     yo.avanzar = function(destino) {
         yo.pag = destino;
         yo.encuesta = 'views/'+rutasCont['/'+destino]+'.html';
+        $timeout(function(){
+            $window.scroll(0, 0);
+        },500);
         guardarDatos();
         var numP = destino - 3;
         if (destino > 2) {
@@ -284,6 +287,9 @@ app.controller('contenedor', ['datos', '$rootScope', '$uibModal', '$timeout', '$
             }
         });
     }
+    yo.cargaInicio = function() {
+        yo.contenedor = 'views/inicio.html';
+    };
 }]);
 app.controller('paso1', ['json', function(json){
     console.log('paso1');
@@ -415,7 +421,25 @@ function dibujarGrafico(paper, ancho, porcentaje, titulo, color, innerH) {
     var arcoBack = arco(centro,radioBack,porcentaje,'arcoBack');
     var baseFront = new paper.Path.Circle(centro,radioFront);
     baseFront.fillColor = color.baseFront;
-    var arcoFront = arco(centro,radioFront,0.01,'arcoFront');
+    //var arcoFront = arco(centro,radioFront,0.01,'arcoFront');
+    
+            var punto = new paper.Path.Circle(centro,5);
+            punto.fillColor = new paper.Color(1,1,1,1);
+            var linea = new paper.Path.Line(centro, new paper.Point(x,ancho * 1.05));
+            linea.strokeColor = new paper.Color(1,1,1,1);
+            linea.strokeWidth = 2;
+            var texto = new paper.PointText(new paper.Point(x,(ancho * 1.175)));
+            texto.content = titulo[0]+'\n'+titulo[1];
+            texto.fillColor = 'white';
+            if (innerH < 768) {
+                texto.fontSize = '14px';
+            } else {
+                texto.fontSize = '16px';
+            }
+            texto.justification = 'center';
+            
+	        var arcoFront = arco(centro,radioFront,porcentaje,'arcoFront');
+            
     function arco(cnt,radio,pcj,col) {
         var x1 = (radio * Math.cos(0)) + x;
         var y1 = (radio * Math.sin(0)) + y;
@@ -431,6 +455,7 @@ function dibujarGrafico(paper, ancho, porcentaje, titulo, color, innerH) {
         path.fillColor = color[col];
         path.rotate(-90,cnt);
     }
+    /* Se elimina el dibujo dinámico de los pasteles
 	paper.view.onFrame = function(evento) {
         var avance = evento.count * (porcentaje / 60);
         if (avance <= porcentaje) {
@@ -453,6 +478,7 @@ function dibujarGrafico(paper, ancho, porcentaje, titulo, color, innerH) {
             texto.justification = 'center';
         }
 	};
+    */
 	paper.view.draw();
 }
 // Servicios

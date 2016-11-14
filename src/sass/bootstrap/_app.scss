@@ -1,7 +1,7 @@
 // Estilos
 body {
     padding-top: $height-header;
-    padding-bottom: ($height-footer * 1.5); //-------> activado mientras el footer es fixed
+    //padding-bottom: ($height-footer * 1.5); //-------> activado mientras el footer es fixed
     a {
         cursor: pointer;
     }
@@ -68,6 +68,7 @@ body {
         h4 {
             margin: 0;
             padding-top: $navbar-padding-vertical * 0.7058823529;
+            font-weight: 400;
             small {
                 display: block;
                 line-height: 1.375;
@@ -75,6 +76,9 @@ body {
                 font-weight: $headings-font-weight;
             }
         }
+    }
+    .navbar-brand {
+        cursor: pointer;
     }
 }
 $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional del footer con respecto al header
@@ -134,9 +138,64 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
     margin-top: $line-height-computed;
     line-height: 1.5;
 }
+// ----------------------> Raros y anormales breakpoints para media queries basados en height, solicitados por el cliente
+$height-sm-min: 620px; // Para pantallas con heights small: phablets, small tablets y laptops viejos y de mala resolution
+$height-md-min: 768px; // Para pantallas con heights med: tablets, small laptops
+$height-lg-min: 1024px; // Para pantallas con heights large: iPad retina, laptops normales, desktops
+$height-xs-max: ($height-sm-min - 1);
+$height-sm-max: ($height-md-min - 1);
+$height-md-max: ($height-lg-min - 1);
+// ----------------------------------> Media queries para height que siempre ajustan el form, sin scroll, como si fuera Flash
+.footer-inicio, .footer-encuesta, .footer-resultados {
+    .footer {
+        position: relative;
+        margin-top: 30px;
+    }
+}
+.footer-inicio {
+    .footer {
+        @media (min-height: $height-sm-min) and (max-height: $height-sm-max) {
+            margin-top: 10px;
+        }
+        @media (min-height: $height-md-min) {
+            //margin-top: 30px;
+            position: fixed;
+        }
+    }
+}
+.contenido-intro {
+    .formulario {
+        @media (min-height: $height-sm-min) and (max-height: $height-sm-max) and (orientation: landscape) {
+            select, input {
+                height: 30px;
+                font-size: 14px;
+            }
+            .checkbox {
+                label {
+                    input {
+                        margin-top: -4px;
+                    }
+                }
+            }
+            .form-group {
+                margin-bottom: 6px;
+            }
+            h1 {
+                font-size: 30px;
+            }
+        }
+        @media (min-height: $height-md-min) and (max-height: $height-md-max) and (orientation: landscape) {
+            h1 {
+                font-size: 36px;
+            }
+        }
+    }
+}
+// ----------------------> Fin de los media queries de alturas tipo 2006
 .contenido-intro {
     @include columnas-intro();
     position: relative;
+    /* Se eliminan las animaciones
     &.ng-enter {
         transition: 0.75s ease-out all;
         @include ancho-desp(left);
@@ -151,6 +210,7 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             @include ancho-desp(right);
         }
     }
+    */
     .formulario {
         .placeholder-option {
             display: none;
@@ -166,6 +226,9 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             &[disabled] {
                 background-color: #afc275;
                 opacity: 1;
+            }
+            @media (max-width: $screen-xs-max) {
+                margin-bottom: 12px;
             }
         }
         .checkbox {
@@ -232,13 +295,16 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             }
         }
         .nav-botones-inf {
-            margin: 0;
+            margin: 0 5px 50px 0;
             div {
                 padding-left: 6px;
                 padding-right: 0;
             }
             .btn {
                 text-transform: uppercase;
+                @media (max-width: $screen-xs-max) {
+                    margin-bottom: 12px;
+                }
             }
         }
     }
@@ -307,9 +373,24 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             display: none;
             color: #ccc;
         }
+        select {
+            background-image: url(../img/select-arrow.png);
+            background-repeat: no-repeat;
+            background-position: 97% 50%;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none !important;
+        }
+        .has-success,
+        .form-control:focus {
+            select {
+                background-image: none;
+            }
+        }
         .boton-avanzar {
             @media (max-width: $screen-xs-max) {
                 margin-top: 4px;
+                margin-bottom: 12px;
             }
             @media (min-width: $screen-xs-min) {
                 margin-top: $font-size-large;
@@ -349,6 +430,7 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
         left: 0;
         z-index: 998;
     } // ---------------------------------------> Todo este bloque, para que quede fixed
+    /* Se eliminan las animaciones
     &.ng-enter {
         transition: 0.75s ease-out all;
         @include ancho-desp(left);
@@ -356,6 +438,7 @@ $alto-footer: $height-footer / $height-header;//0.75; // La altura proporcional 
             left: 0;
         }
     }
+    */
     .avance-lineal {
         color: #333;
         background-color: #fff;
@@ -428,7 +511,7 @@ $top-alerta: $height-header;//$navbar-margin-bottom * 1.95;
     z-index: 999;
     @media (max-width: $screen-xs-max) {
         width: 100%;
-        top: $top-alerta * 2;
+        top: $top-alerta;// * 2;
         left: 0;
     }
     @media (min-width: $screen-sm-min) {
@@ -443,6 +526,7 @@ $top-alerta: $height-header;//$navbar-margin-bottom * 1.95;
         width: ($container-lg - 30);
         top: $top-alerta;
     }
+    /* Se eliminan las animaciones
     &.ng-enter {
         transition: 0.5s linear all;
         top: -10px;
@@ -456,6 +540,7 @@ $top-alerta: $height-header;//$navbar-margin-bottom * 1.95;
             top: -10px;
         }
     }
+    */
 }
 $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse desde esta variable
 .cont-navegacion {
@@ -463,9 +548,10 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
         position: fixed; // -------------------------> Todo es fixed
         div {
             padding: 0;
-        } 
+        }
         .btn-menu {
             @include button-menu(#4d505b, $nav-bg, $brand-danger);
+            opacity: 1;
             .btn-cont {
                 .icono-nav {
                     background-size: contain;
@@ -486,6 +572,13 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
                     }
                 }
             }
+            &[disabled] {
+                &:hover,
+                &:focus {
+                    background-color: #d62555;
+                    opacity: 0.5;
+                }
+            }
         }
     }
     @media (min-width: $screen-xs-min) {
@@ -500,6 +593,7 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
                     display: table;
                     vertical-align: middle;
                     margin: auto;
+                    width: 100%;
                     .icono-nav {
                         margin: 0 $font-size-h3;
                         display: table-cell;
@@ -514,6 +608,7 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
                 }
             }
         }
+        /* Se eliminan las animaciones
         &.ng-enter {
             transition: 0.75s ease-out all;
             @include ancho-desp(left);
@@ -521,6 +616,7 @@ $alto-bar-nivel2nav: 35px; // ----------------------------> OJO, debe ajustarse 
                 left: 0;
             }
         }
+        */
     }
     @media (max-width: $screen-xs-max) {
         .navegacion {

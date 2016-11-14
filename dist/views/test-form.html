@@ -5,8 +5,8 @@
             <rzslider id="{{paso.bloque+($index+1)}}" rz-slider-model="cont.datos[paso.bloque+($index+1)]" rz-slider-options="cont.opcionesSlider"></rzslider>
         </div>
     </div>
-    <div class="row nav-botones-inf hidden-xs" ng-if="paso.pag < 6">
-        <div class="col-sm-4">&nbsp;</div>
+    <div class="row nav-botones-inf" ng-if="paso.pag < 6">
+        <div class="col-sm-4 hidden-xs">&nbsp;</div>
         <div class="col-sm-4">
             <button class="btn btn-primary btn-block" ng-click="cont.avanzar(paso.pag-1)">
                 Volver
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row nav-botones-inf" ng-if="paso.pag == 6">
-        <div class="col-sm-4 hidden-xs">
+        <div class="col-sm-4">
             <button class="btn btn-primary btn-block" ng-click="cont.avanzar(paso.pag-1)">
                 Volver
             </button>
