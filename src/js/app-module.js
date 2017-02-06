@@ -400,7 +400,9 @@ function prepararGraficos(innerH) {
         var fondo = paper.Path.Rectangle(new paper.Point(0,0),new paper.Point(ancho,alto));
         fondo.fillColor = new paper.Color(0,0,0,0.25);
         */
-        var porcentaje = dataGraficos[llave] / totalValores;
+        // Por solicitud del cliente, el porcentaje no se calcula sobre el total de valores, sino sobre el total posible, 20, a pesar de que así los resultados son más cercanos unos de otros y no son tan diferentes visualmente.
+        //var porcentaje = dataGraficos[llave] / totalValores;
+        var porcentaje = dataGraficos[llave] / 20;
         var color;
         if (dataGraficos[llave] == Math.max.apply(Math, dataGraficos)) {
             color = colorGraficos[0];
