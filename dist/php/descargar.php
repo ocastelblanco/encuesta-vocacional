@@ -24,17 +24,20 @@ $database = new medoo(array(
 	'charset' => 'utf8',
 	'port' => 3306
 ));
+$nci = 11; // -----------> Número de campos iniciales
 $data = $database->select($TABLA, "*");
-$letraCeldas = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ");
+$letraCeldas = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV","BW","BX","BY","BZ","CA","CB");
 $valoresPreguntas = array("","Nunca","Casi nunca","Casi siempre","Siempre");
+// Crea los títulos de las celdas en la fila superior, fila 1.
 for ($i=0;$i<count($titulos);$i++) {
     $celda = $letraCeldas[$i]."1";
     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $titulos[$i]);
 }
+// Crea la data de los campos de datos personales
 for ($i=0;$i<count($data);$i++) {
     for ($e=0;$e<count($campos);$e++) {
         $celda = $letraCeldas[$e].($i+2);
-        if ($e > 9 && $e < count($campos)-1) {
+        if ($e > $nci && $e < count($campos)-1) {
             $cont = $valoresPreguntas[$data[$i][$campos[$e]]];
             //$cont = $data[$i][$campos[$e]];
         } else {
@@ -43,10 +46,12 @@ for ($i=0;$i<count($data);$i++) {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $cont);
     }
 }
-for ($n=0;$n<8;$n++) {
+// Crea las etiquetas de primera fila para los 'intereses'. Son 8
+for ($n=0;$n<count($labels);$n++) {
     $celda = $letraCeldas[count($campos)+$n]."1";
     $objPHPExcel->setActiveSheetIndex(0)->setCellValue($celda, $labels[$n]);
 }
+// Introduce la data de los resultados, respuesta a respuesta.
 for ($i=0;$i<count($data);$i++) {
     $posCelda = 0;
     for ($n=1;$n<5;$n++) {
@@ -92,3 +97,5 @@ header ('Pragma: public');
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save('php://output');
 exit;
+// */
+?>
