@@ -1,62 +1,83 @@
 <div ng-controller="paso1 as p1">
     <h1>Regístrate ahora</h1>
-    <h6>Debes completar todos los campos para continuar.</h6>
-    <div class="formulario">
+    <h6>Debes completar todos los campos para continuar.</h6> 
+    <form name="formulario" class="formulario">
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.nombres}">
-            <!--label for="nombres">Nombres</label-->
-            <input type="text" class="form-control" id="nombres" placeholder="Nombres" ng-model="cont.datos.nombres">
-            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.nombres"></i>
+            <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres" ng-pattern="/^[a-zA-Z\sñÑáéíóúüÁÉÍÓÚÜ]{4,}$/" ng-model="cont.datos.nombres" ng-keyup="cont.datos.nombres=p1.soloTexto(formulario.nombres.$viewValue)" required>
+            <!--div class="help-block" ng-messages="formulario.nombres.$error" role="alert" ng-show="userForm.name.$touched">
+                <div ng-message="required">Este campo es requerido.</div>
+            </div-->
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.nombres && formulario.nombres.$valid"></i>
+            <!--i class="fa fa-exclamation-circle fa-lg form-control-feedback" ng-show="cont.datos.nombres && formulario.nombres.$invalid"></i-->
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.apellidos}">
-            <!--label for="apellidos">Apellidos</label-->
-            <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" ng-model="cont.datos.apellidos">
+            <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" ng-pattern="/^[a-zA-Z\sñÑáéíóúüÁÉÍÓÚÜ]{4,}$/" ng-model="cont.datos.apellidos" ng-keyup="cont.datos.apellidos=p1.soloTexto(formulario.apellidos.$viewValue)" required>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.apellidos"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.tipo}">
-            <!--label for="tipo">Tipo de documento</label-->
             <select id="tipo" class="form-control" ng-class="{'no-activo': !cont.datos.tipo, 'select-desplegado': p1.abierto.tipo}" ng-model="cont.datos.tipo" ng-options="valor.num as valor.doc for (key,valor) in p1.tipos" ng-change="p1.cambiaTipo()" ng-click="p1.abierto.tipo=!p1.abierto.tipo" ng-blur="p1.abierto.tipo = p1.cambiaSelect(p1.abierto.tipo,1)" ng-keyup="p1.abierto.tipo = p1.cambiaSelect(p1.abierto.tipo,$event.keyCode)">
                 <option class="placeholder-option" value="">Tipo de documento</option>
             </select>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.tipo"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.documento}">
-            <!--label for="documento">Número de documento</label-->
-            <input type="text" class="form-control" id="documento" placeholder="{{p1.placeDoc}}" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)" ng-change="cont.limpiaNumDocumento()" ng-disabled="!cont.datos.tipo">
+            <input type="text" class="form-control" id="documento" placeholder="{{p1.placeDoc}}" ng-model="cont.datos.documento" ng-blur="cont.verificaCampo('documento',cont.datos.documento)"> <!-- ng-change="cont.limpiaNumDocumento()" ng-disabled="!cont.datos.tipo"-->
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.documento"></i>
         </div>
-        <div class="form-group has-feedback" ng-class="{'has-success':cont.datos.email}">
-            <!--label for="email">Correo electrónico</label-->
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.celular}">
+            <input type="number" class="form-control" id="celular" placeholder="Número de celular" ng-model="cont.datos.celular">
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.celular"></i>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.email}">
             <input type="email" class="form-control" id="email" placeholder="Correo electrónico" ng-model="cont.datos.email" ng-blur="cont.verificaCampo('email',cont.datos.email)">
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.email"></i>
         </div>
-        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.celular}">
-            <!--label for="celular">Número celular</label-->
-            <input type="number" class="form-control" id="celular" placeholder="Número celular" ng-model="cont.datos.celular">
-            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.celular"></i>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.ciudad}">
+            <select id="ciudad" class="form-control" ng-class="{'no-activo': !cont.datos.ciudad, 'select-desplegado': p1.abierto.ciudad}" ng-model="cont.datos.ciudad" ng-options="ciudad for ciudad in p1.ciudades" ng-click="p1.abierto.ciudad=!p1.abierto.ciudad" ng-blur="p1.abierto.ciudad = p1.cambiaSelect(p1.abierto.ciudad,1)" ng-keyup="p1.abierto.ciudad = p1.cambiaSelect(p1.abierto.ciudad,$event.keyCode)">
+                <option class="placeholder-option" value="">Ciudad</option>
+            </select>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.ciudad"></i>
         </div>
-        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.departamento}">
-            <!--label for="departamento">Departamento</label-->
+        <div class="checkbox form-group has-feedback" ng-init="abreColegio=false" ng-click="abreColegio=!abreColegio">
+                <input type="checkbox" value="">
+            <label>
+                ¿Estás estudiando en el colegio?
+                <i class="fa fa-check" ng-show="abreColegio"></i>
+            </label>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.colegio}" ng-if="abreColegio">
+            <input type="text" class="form-control" id="colegio" placeholder="Colegio" ng-model="cont.datos.colegio">
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.colegio"></i>
+        </div>
+        <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.grado}" ng-if="abreColegio">
+            <select id="grado" class="form-control" ng-class="{'no-activo': !cont.datos.grado, 'select-desplegado': p1.abierto.grado}" ng-model="cont.datos.grado" ng-options="valor.num as valor.grado for (key,valor) in p1.grados" ng-click="p1.abierto.grado=!p1.abierto.grado" ng-blur="p1.abierto.grado = p1.cambiaSelect(p1.abierto.grado,1)" ng-keyup="p1.abierto.grado = p1.cambiaSelect(p1.abierto.grado,$event.keyCode)">
+                <option class="placeholder-option" value="">Grado</option>
+            </select>
+            <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.grado"></i>
+        </div>
+        <!--div class="form-group has-feedback" ng-class="{'has-success': cont.datos.departamento}">
             <select id="departamento" class="form-control" ng-class="{'no-activo': !cont.datos.departamento, 'select-desplegado': p1.abierto.departamento}" ng-model="cont.datos.departamento" ng-options="depto as depto for (depto,valor) in p1.municipios" ng-change="p1.cambiaDepto(cont.datos.departamento);" ng-click="p1.abierto.departamento=!p1.abierto.departamento" ng-blur="p1.abierto.departamento = p1.cambiaSelect(p1.abierto.departamento,1)" ng-keyup="p1.abierto.departamento = p1.cambiaSelect(p1.abierto.departamento,$event.keyCode)">
                 <option class="placeholder-option" value="">Departamento</option>
             </select>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.departamento"></i>
         </div>
         <div class="form-group has-feedback" ng-class="{'has-success': cont.datos.ciudad}">
-            <!--label for="ciudad">Municipio</label-->
             <select id="ciudad" class="form-control" ng-class="{'no-activo': !cont.datos.ciudad, 'select-desplegado': p1.abierto.ciudad}" ng-model="cont.datos.ciudad" ng-options="ciudad as ciudad for ciudad in p1.municipios[cont.datos.departamento]" ng-disabled="!cont.datos.departamento" ng-click="p1.abierto.ciudad=!p1.abierto.ciudad" ng-blur="p1.abierto.ciudad = p1.cambiaSelect(p1.abierto.ciudad,1)" ng-keyup="p1.abierto.ciudad = p1.cambiaSelect(p1.abierto.ciudad,$event.keyCode)">
                 <option class="placeholder-option" value="">{{p1.placeMun}}</option>
             </select>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.datos.ciudad"></i>
-        </div>
-        <div class="checkbox form-group has-feedback" ng-class="{'has-success': cont.terminos}">
+        </div-->
+        <div class="checkbox form-group has-feedback" ng-class="{'has-success': cont.terminos}" ng-init="cont.terminos=false" ng-click="cont.terminos=!cont.terminos">
+                <input type="checkbox" value="" ng-model="cont.terminos" ng-checked="cont.terminos">
             <label>
-                <input type="checkbox" value="" ng-model="cont.terminos">
-                Acepto los <a href="terminos.pdf">términos y condiciones</a>
+                Acepto <a href="assets/docs/terminos-y-condiciones.pdf" target="_blank">términos y condiciones</a>
+                <i class="fa fa-check" ng-show="cont.terminos"></i>
             </label>
             <i class="fa fa-check fa-lg form-control-feedback" ng-show="cont.terminos"></i>
         </div>
-        <button class="btn btn-primary btn-block boton-avanzar" ng-click="cont.avanzar(2)" ng-disabled="cont.validar('Datos')">
-            Conocer mi camino
+        <button class="btn btn-primary btn-block boton-avanzar" ng-click="cont.avanzar(2,'no')" ng-disabled="cont.validar('Datos')">
+            <span>Conocer mi camino </span>
+            <i class="fa fa-angle-double-right"></i>
         </button>
-    </div>
+    </form>
 </div>
